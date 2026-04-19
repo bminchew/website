@@ -82,7 +82,7 @@ TOPICS = [
             'Through the <a href="https://www.areteglaciers.org/">Ar\u00eate Glacier Initiative</a>, we are taking first steps toward developing the science and technology needed to evaluate glacier stabilization as a complement to emissions reduction.',
         ],
         'keys': [
-            'meyer2025b', 'minchew2020b', 'minchew2020a', 'minchew2016b',
+            'guardian2026', 'minchew2024', 'meyer2025b', 'minchew2020b', 'minchew2020a', 'minchew2016b',
         ],
         'extra_html': '''
   <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">In the News &amp; Media</h2>
@@ -258,10 +258,13 @@ def format_pub_item(entry, site_dir):
 def main():
     bib_dir = os.path.join(script_dir, '..', 'mywebsite', 'pubs')
     journal_bib = os.path.join(bib_dir, 'minchew_journals.bib')
+    general_bib = os.path.join(bib_dir, 'minchew_general.bib')
 
     all_entries = {}
     if os.path.exists(journal_bib):
         all_entries.update(parse_bib(journal_bib))
+    if os.path.exists(general_bib):
+        all_entries.update(parse_bib(general_bib))
 
     # Tag entries with keys
     for k, v in all_entries.items():
