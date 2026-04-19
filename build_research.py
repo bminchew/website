@@ -97,7 +97,7 @@ TOPICS = [
       <h3><a href="https://apple.news/AchiyBHcWTy2lGZMBKKnlzw">BBC Science Focus Magazine: Doomsday Glacier</a></h3>
     </li>
     <li class="software-item">
-      <h3><a href="https://www.theatlantic.com/magazine/archive/2024/07/nasa-nisar-mission-glaciers-sea-ice-thwaites/678522/">The Atlantic: NASA NISAR Mission</a></h3>
+      <h3><a href="https://www.theatlantic.com/magazine/archive/2024/07/nasa-nisar-mission-glaciers-sea-ice-thwaites/678522/">The Atlantic: Glacier Rescue Project</a></h3>
     </li>
     <li class="software-item">
       <h3><a href="https://www.youtube.com/watch?v=ulmrRWy0FSQ">The Atlantic Festival: The Climate Summit</a></h3>
