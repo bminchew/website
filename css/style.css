@@ -53,15 +53,16 @@ img {
    Header
    ============================================================ */
 .site-header {
-  background: var(--deep-teal);
-  color: var(--white);
-  border-bottom: 4px solid var(--caltech-orange);
+  background: var(--white);
+  color: var(--text-dark);
+  border-top: 4px solid var(--caltech-orange);
+  border-bottom: 1px solid var(--light-gray);
 }
 
 .header-inner {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -71,16 +72,17 @@ img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--deep-teal);
   letter-spacing: 0.02em;
 }
 
 .site-title a {
-  color: var(--white);
+  color: var(--deep-teal);
   border: none;
 }
 
 .site-title a:hover {
+  color: var(--caltech-orange);
   border: none;
 }
 
@@ -88,7 +90,7 @@ img {
   font-family: Georgia, serif;
   font-style: italic;
   font-size: 0.95rem;
-  color: var(--light-gray);
+  color: var(--cool-gray);
   margin-top: 0.2rem;
 }
 
@@ -504,9 +506,9 @@ img {
    Footer
    ============================================================ */
 .site-footer {
-  background: var(--deep-teal);
-  color: var(--light-gray);
-  border-top: 4px solid var(--caltech-orange);
+  background: var(--white);
+  color: var(--cool-gray);
+  border-top: 1px solid var(--light-gray);
   padding: 1.5rem 2rem;
   margin-top: 3rem;
 }
@@ -522,7 +524,7 @@ img {
 }
 
 .footer-inner a {
-  color: var(--caltech-orange);
+  color: var(--deep-teal);
   border: none;
 }
 
