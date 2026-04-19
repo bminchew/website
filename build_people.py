@@ -29,7 +29,7 @@ PHOTO_OVERRIDES = {
     'Mila Lubeck': 'mila_picture.png',
     'Neosha Narayanan': 'Neosha_Narayanan_headshot_1_edit.jpg',
     'Annick Dewald': 'AnnickDewald-portrait.png',
-    'Natasha Morgan-Wells': 'NatashaMorganWitts-e1738084186427-300x300.png',
+    'Natasha Morgan-Witts': 'NatashaMorganWitts-e1738084186427-300x300.png',
     'Yudong Sun': 'yudong_headshot.jpg',
     'Alex Miller': 'asmiller.jpg',
     'Elizabeth (Lizz) Ultee': 'ultee.jpg',
