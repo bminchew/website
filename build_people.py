@@ -176,10 +176,19 @@ def parse_description(desc, start_year, end_year, is_current):
             is_project = True
             break
 
-    # Split on semicolons to get name+title vs current position
-    parts = desc.split(';')
-    name_title = parts[0].strip()
-    current_pos = parts[1].strip() if len(parts) > 1 else ''
+    # Split on semicolons or ", now " to get name+title vs current position
+    if '; now ' in desc or ';' in desc:
+        parts = desc.split(';', 1)
+        name_title = parts[0].strip()
+        current_pos = parts[1].strip() if len(parts) > 1 else ''
+    elif ', now ' in desc:
+        # ", now " separates the description from current position
+        idx = desc.index(', now ')
+        name_title = desc[:idx].strip()
+        current_pos = desc[idx + 2:].strip()  # keep "now ..."
+    else:
+        name_title = desc
+        current_pos = ''
 
     # Split name from title/department
     # Name ends at the first comma NOT inside parentheses,
@@ -226,35 +235,40 @@ def parse_description(desc, start_year, end_year, is_current):
 
     # Build display title
     if is_current:
-        if title_part:
-            display_title = title_part
-        else:
-            display_title = ''
+        display_title = title_part if title_part else ''
     else:
-        if current_pos:
-            display_title = f'{title_part}' if title_part else ''
-            if end_year:
-                # Try to extract degree info
-                degree_match = re.search(r'\(?(PhD|MS|M\.S\.)', title_part)
-                if degree_match:
-                    degree = degree_match.group(1)
-                    display_title = f'{degree} {end_year}, {title_part.split("(")[0].strip()}'
-                else:
-                    display_title = f'{title_part}, {start_year}&ndash;{end_year}' if title_part else f'{start_year}&ndash;{end_year}'
-            display_title += f' &rarr; {current_pos}' if current_pos else ''
+        # For alumni, build: "Degree Year, Department -> current position"
+        # Extract degree from title_part (e.g., "PhD, PAOC" or "MIT EAPS (MS)")
+        degree = ''
+        dept = title_part
+
+        # Check for degree in parenthetical: "MIT EAPS (PhD, PAOC)"
+        paren_match = re.search(r'\((PhD|MS|M\.S\.)([^)]*)\)', title_part)
+        if paren_match:
+            degree = paren_match.group(1)
+            # Department is the part before the parenthetical
+            dept = title_part[:paren_match.start()].strip().rstrip(',')
         else:
-            if end_year and title_part:
-                degree_match = re.search(r'\(?(PhD|MS|M\.S\.)', title_part)
-                if degree_match:
-                    degree = degree_match.group(1)
-                    dept = title_part.split('(')[0].strip().rstrip(',')
-                    display_title = f'{degree} {end_year}, {dept}'
-                else:
-                    display_title = f'{title_part}, {start_year}&ndash;{end_year}'
-            elif end_year:
-                display_title = f'{start_year}&ndash;{end_year}'
-            else:
-                display_title = title_part
+            # Check for degree at start: "PhD, PAOC"
+            start_match = re.match(r'^(PhD|MS|M\.S\.)\b[,\s]*(.*)', title_part)
+            if start_match:
+                degree = start_match.group(1)
+                dept = start_match.group(2).strip()
+            # Check for embedded degree like "MIT PhD '24, AeroAstro"
+            embed_match = re.search(r'MIT PhD .?\d{2}', title_part)
+            if embed_match:
+                degree = 'PhD'
+                dept = re.sub(r'MIT PhD .?\d{2},?\s*', '', title_part).strip()
+
+        if degree and end_year:
+            display_title = f'{degree} {end_year}, {dept}' if dept else f'{degree} {end_year}'
+        elif end_year:
+            display_title = f'{dept}, {start_year}&ndash;{end_year}' if dept else f'{start_year}&ndash;{end_year}'
+        else:
+            display_title = title_part
+
+        if current_pos:
+            display_title += f' &rarr; {current_pos}'
 
     # Apply display name override
     display_name = DISPLAY_NAME_OVERRIDES.get(name, name)
