@@ -302,7 +302,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 <header class="site-header">
   <div class="header-inner">
     <div>
-      <div class="site-title"><a href="index.html">Caltech Glaciology</a></div>
+      <div class="site-title"><a href="index.html"><span class="caltech">Caltech</span> <span class="group-name">Glaciology</span></a></div>
       <div class="site-tagline">Mechanics of flowing ice</div>
     </div>
   </div>

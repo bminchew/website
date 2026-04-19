@@ -72,8 +72,15 @@ img {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 1.6rem;
   font-weight: 700;
-  color: var(--deep-teal);
   letter-spacing: 0.02em;
+}
+
+.site-title .caltech {
+  color: var(--caltech-orange);
+}
+
+.site-title .group-name {
+  color: var(--deep-teal);
 }
 
 .site-title a {
