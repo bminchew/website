@@ -268,6 +268,11 @@ def generate_html(entries, title, numbered=True, start_num=None, site_dir='.'):
             else:
                 doi_url = doi_clean
             links += f'<a href="{doi_url}">[doi]</a> '
+        url = entry.get('url', '').strip()
+        if url and not doi:
+            if not url.startswith('http'):
+                url = 'https://' + url
+            links += f'<a href="{url}">[article]</a> '
 
         html += f'      <li class="pub-item">\n'
         if numbered:
