@@ -148,6 +148,7 @@ SUBPAGE_TEMPLATE = '''<!DOCTYPE html>
   <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <header class="site-header">
   <div class="header-inner">
@@ -172,7 +173,7 @@ SUBPAGE_TEMPLATE = '''<!DOCTYPE html>
   </div>
 </nav>
 
-<main class="content-wrap">
+<main id="main" class="content-wrap">
   <h1 class="page-title">{title}</h1>
 
   <img src="{image}" alt="{title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 3px; margin-bottom: 1.5rem;">
@@ -192,8 +193,17 @@ SUBPAGE_TEMPLATE = '''<!DOCTYPE html>
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
-    <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+    <div class="footer-row">
+      <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
+      <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+    </div>
+    <div class="footer-row">
+      <span>&copy; California Institute of Technology</span>
+      <div class="footer-links">
+        <a href="https://digitalaccessibility.caltech.edu/">Digital Accessibility</a>
+        <a href="https://www.caltech.edu/privacy-notice">Privacy Notice</a>
+      </div>
+    </div>
   </div>
 </footer>
 

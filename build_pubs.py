@@ -298,6 +298,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <header class="site-header">
   <div class="header-inner">
@@ -322,7 +323,7 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
   </div>
 </nav>
 
-<main class="content-wrap">
+<main id="main" class="content-wrap">
   <h1 class="page-title">Publications</h1>
 
   <p class="pub-note">* indicates graduate students, ** undergraduates, and &#9734; postdocs and research scientists.</p>
@@ -334,8 +335,17 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
-    <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+    <div class="footer-row">
+      <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
+      <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+    </div>
+    <div class="footer-row">
+      <span>&copy; California Institute of Technology</span>
+      <div class="footer-links">
+        <a href="https://digitalaccessibility.caltech.edu/">Digital Accessibility</a>
+        <a href="https://www.caltech.edu/privacy-notice">Privacy Notice</a>
+      </div>
+    </div>
   </div>
 </footer>
 
