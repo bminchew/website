@@ -35,6 +35,21 @@ SKIP_NAMES = {'Brent Minchew'}
 
 YEARS_WINDOW = 3
 
+# Current postdocs/research scientists: use current year as end year
+# so their recent papers show up
+import datetime
+CURRENT_YEAR = datetime.datetime.now().year
+
+CURRENT_MEMBERS_END_YEAR = {
+    'Evan Kramer': CURRENT_YEAR,
+}
+
+# Override end years for people whose title text doesn't contain a parseable year
+END_YEAR_OVERRIDES = {
+    'Bryan Riel': 2022,
+    'Lizz Ultee': 2021,
+}
+
 
 def extract_end_year(title_text):
     """Extract the end/graduation year from a person-title string."""
@@ -137,19 +152,7 @@ def main():
         '', html, flags=re.DOTALL
     )
 
-    # Find all person blocks in Alumni section
-    # Pattern: find each <h3>Name</h3> followed by <div class="person-title">...</div>
-    alumni_section = re.search(
-        r'(Alumni</h2>)(.*?)(</div>\s*\n\s*</main>)',
-        html, re.DOTALL
-    )
-    if not alumni_section:
-        print('ERROR: could not find Alumni section')
-        sys.exit(1)
-
-    alumni_html = alumni_section.group(2)
-
-    # Process each person in the alumni section
+    # Process each person block across the entire page
     def add_pubs_to_person(match):
         block = match.group(0)
         name_match = re.search(r'<h3>([^<]+)</h3>', block)
@@ -165,7 +168,9 @@ def main():
             return block
 
         lastname = get_bib_lastname(name)
-        end_year = extract_end_year(title_text)
+        end_year = (CURRENT_MEMBERS_END_YEAR.get(name)
+                    or END_YEAR_OVERRIDES.get(name)
+                    or extract_end_year(title_text))
 
         if not end_year:
             return block
@@ -190,7 +195,7 @@ def main():
             f'        <!-- END AUTO PUBS -->'
         )
 
-        # Insert after the person-title div
+        # Insert after the last person-title or person-contact div
         block = re.sub(
             r'(</div>\s*\n)(\s*</div>\s*\n\s*</div>)',
             r'\1' + injection + r'\n\2',
@@ -201,16 +206,13 @@ def main():
         print(f'  {name}: {len(papers)} papers (end year {end_year})')
         return block
 
-    # Match each person block
-    new_alumni = re.sub(
+    # Match each person block across the whole page
+    html = re.sub(
         r'<div class="person">.*?</div>\s*\n\s*</div>\s*\n\s*</div>',
         add_pubs_to_person,
-        alumni_html,
+        html,
         flags=re.DOTALL
     )
-
-    # Reconstruct HTML
-    html = html[:alumni_section.start(2)] + new_alumni + html[alumni_section.end(2):]
 
     with open(people_path, 'w', encoding='utf-8') as f:
         f.write(html)
