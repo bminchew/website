@@ -84,6 +84,42 @@ TOPICS = [
         'keys': [
             'martin2025', 'minchew2020b', 'minchew2018b',
         ],
+        'extra_html': '''
+  <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">In the News &amp; Media</h2>
+  <ul class="software-list">
+    <li class="software-item">
+      <h3><a href="https://www.forbes.com/sites/monicasanders/2025/04/24/5-million-to-save-the-doomsday-glacier-can-we-prevent-catastrophe/">Forbes: $5 Million To Save The Doomsday Glacier, Can We Prevent Catastrophe?</a></h3>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://www.technologyreview.com/2025/03/21/1113396/inside-a-new-quest-to-save-the-doomsday-glacier/">MIT Technology Review: Inside a new quest to save the &lsquo;doomsday glacier&rsquo;</a></h3>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://apple.news/AchiyBHcWTy2lGZMBKKnlzw">BBC Science Focus Magazine: Doomsday Glacier</a></h3>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://www.theatlantic.com/magazine/archive/2024/07/nasa-nisar-mission-glaciers-sea-ice-thwaites/678522/">The Atlantic: NASA NISAR Mission</a></h3>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://www.youtube.com/watch?v=ulmrRWy0FSQ">The Atlantic Festival: The Climate Summit</a></h3>
+      <p>Video</p>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://mcj.vc/inevitable-podcast/arete-glacier-initiative">My Climate Journey Podcast: Can We Slow the Doomsday Glacier?</a></h3>
+      <p>Podcast</p>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://eaps.mit.edu/news-impact/brent-minchew-on-curiosity-unbounded-episode-14-putting-a-glacier-in-its-place/">Curiosity Unbounded Podcast: Putting a Glacier In Its Place</a></h3>
+      <p>Podcast</p>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://www.areteglaciers.org/releases">Ar&ecirc;te Glacier Initiative Press Release: Launch Announcement</a></h3>
+    </li>
+    <li class="software-item">
+      <h3><a href="https://drive.google.com/file/d/18JTSrwL5ZaIN5_1Ozl2wkn0gYad95gFV/view?usp=sharing">Ar&ecirc;te 2025 Annual Report</a></h3>
+      <p>PDF</p>
+    </li>
+  </ul>
+''',
     },
     {
         'slug': 'hazards',
@@ -150,6 +186,7 @@ SUBPAGE_TEMPLATE = '''<!DOCTYPE html>
 {pub_html}
   </ul>
 
+{extra_html}
   <p style="margin-top: 1.5rem;"><a href="../research.html">&larr; Back to Research Overview</a></p>
 </main>
 
@@ -241,6 +278,7 @@ def main():
             image=topic['image'],
             description_html=desc_html,
             pub_html=pub_html,
+            extra_html=topic.get('extra_html', ''),
         )
 
         outpath = os.path.join(research_dir, f"{topic['slug']}.html")
