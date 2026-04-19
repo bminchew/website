@@ -411,6 +411,38 @@ a.research-card:hover {
   line-height: 1.6;
 }
 
+.alumni-pubs {
+  margin-top: 0.4rem;
+}
+
+.alumni-pubs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alumni-pubs li {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--cool-gray);
+  margin-bottom: 0.3rem;
+  padding-left: 0.8rem;
+  text-indent: -0.8rem;
+}
+
+.alumni-pubs li::before {
+  content: "\2022\00a0";
+  color: var(--caltech-orange);
+}
+
+.alumni-pubs a {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--caltech-orange);
+  border: none;
+}
+
 /* ============================================================
    Publications
    ============================================================ */
