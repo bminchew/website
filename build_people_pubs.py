@@ -104,9 +104,6 @@ def format_compact_pub(key, entry):
     """Format a publication as a compact one-line HTML string."""
     # Clean title
     title = clean_latex(entry.get('title', ''))
-    # Truncate long titles
-    if len(title) > 100:
-        title = title[:97] + '...'
     journal = clean_latex(entry.get('journal', ''))
     year = entry.get('year', '')
     doi = entry.get('doi', '')
