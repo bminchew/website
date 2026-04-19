@@ -180,12 +180,7 @@ SUBPAGE_TEMPLATE = '''<!DOCTYPE html>
 
 {description_html}
 
-  <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">Relevant Publications</h2>
-  <p class="pub-note">* graduate students, ** undergraduates, &#9734; postdocs and research scientists.</p>
-
-  <ul class="pub-list" style="margin-top: 1rem;">
-{pub_html}
-  </ul>
+{pub_sections}
 
 {extra_html}
   <p style="margin-top: 1.5rem;"><a href="../research.html">&larr; Back to Research Overview</a></p>
@@ -263,8 +258,11 @@ def main():
     all_entries = {}
     if os.path.exists(journal_bib):
         all_entries.update(parse_bib(journal_bib))
+    general_keys = set()
     if os.path.exists(general_bib):
-        all_entries.update(parse_bib(general_bib))
+        general_entries = parse_bib(general_bib)
+        general_keys = set(general_entries.keys())
+        all_entries.update(general_entries)
 
     # Tag entries with keys
     for k, v in all_entries.items():
@@ -279,18 +277,37 @@ def main():
         for para in topic['description']:
             desc_html += f'  <p style="margin-bottom: 0.8rem;">{para}</p>\n'
 
-        # Build publication list
-        pub_html = ''
+        # Separate scholarly from general publications
+        scholarly_html = ''
+        general_html = ''
         for key in topic['keys']:
             if key in all_entries:
-                pub_html += format_pub_item(all_entries[key], script_dir)
+                item = format_pub_item(all_entries[key], script_dir)
+                if key in general_keys:
+                    general_html += item
+                else:
+                    scholarly_html += item
+
+        # Build publication sections
+        pub_sections = ''
+        if scholarly_html:
+            pub_sections += '  <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">Relevant Scholarly Articles</h2>\n'
+            pub_sections += '  <p class="pub-note">* graduate students, ** undergraduates, &#9734; postdocs and research scientists.</p>\n'
+            pub_sections += '\n  <ul class="pub-list" style="margin-top: 1rem;">\n'
+            pub_sections += scholarly_html
+            pub_sections += '  </ul>\n'
+        if general_html:
+            pub_sections += '\n  <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">Other Publications</h2>\n'
+            pub_sections += '\n  <ul class="pub-list" style="margin-top: 1rem;">\n'
+            pub_sections += general_html
+            pub_sections += '  </ul>\n'
 
         # Render template
         html = SUBPAGE_TEMPLATE.format(
             title=topic['title'],
             image=topic['image'],
             description_html=desc_html,
-            pub_html=pub_html,
+            pub_sections=pub_sections,
             extra_html=topic.get('extra_html', ''),
         )
 
