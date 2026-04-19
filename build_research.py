@@ -108,8 +108,8 @@ TOPICS = [
       <p>Podcast</p>
     </li>
     <li class="software-item">
-      <h3><a href="https://eaps.mit.edu/news-impact/brent-minchew-on-curiosity-unbounded-episode-14-putting-a-glacier-in-its-place/">Curiosity Unbounded Podcast: Putting a Glacier In Its Place</a></h3>
-      <p>Podcast</p>
+      <h3>Curiosity Unbounded: Putting a Glacier In Its Place</h3>
+      <p><a href="https://eaps.mit.edu/news-impact/brent-minchew-on-curiosity-unbounded-episode-14-putting-a-glacier-in-its-place/">Podcast</a> &middot; <a href="https://www.youtube.com/watch?v=2KkJLcvpSI4">Video</a></p>
     </li>
     <li class="software-item">
       <h3><a href="https://www.areteglaciers.org/releases">Ar&ecirc;te Glacier Initiative Press Release: Launch Announcement</a></h3>
