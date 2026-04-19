@@ -82,7 +82,7 @@ TOPICS = [
             'Through the <a href="https://www.areteglaciers.org/">Ar\u00eate Glacier Initiative</a>, we are taking first steps toward developing the science and technology needed to evaluate glacier stabilization as a complement to emissions reduction.',
         ],
         'keys': [
-            'martin2025', 'minchew2020b', 'minchew2018b',
+            'meyer2025b', 'minchew2020b', 'minchew2020a', 'minchew2016b',
         ],
         'extra_html': '''
   <h2 class="section-title" style="font-size: 1.2rem; margin-top: 2rem;">In the News &amp; Media</h2>
