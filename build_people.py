@@ -31,6 +31,7 @@ PHOTO_OVERRIDES = {
     'Annick Dewald': 'AnnickDewald-portrait.png',
     'Natasha Morgan-Witts': 'NatashaMorganWitts-e1738084186427-300x300.png',
     'Yudong Sun': 'yudong_headshot.jpg',
+    "Grace O'Neil": 'grace_oneal.jpeg',
     'Alex Miller': 'asmiller.jpg',
     'Elizabeth (Lizz) Ultee': 'ultee.jpg',
     'Lizz Ultee': 'ultee.jpg',
