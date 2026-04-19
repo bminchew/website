@@ -254,6 +254,9 @@ def generate_html(entries, title, numbered=True, start_num=None, site_dir='.'):
         if pages:
             cite += f', {clean_latex(pages)}'
         cite += f', {year}.'
+        note = clean_latex(entry.get('note', ''))
+        if note:
+            cite += f' <em>{note}.</em>'
 
         # Links
         links = ''
