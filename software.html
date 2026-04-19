@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software &mdash; Caltech Glaciology</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="site-title"><a href="index.html">Caltech Glaciology</a></div>
+      <div class="site-tagline">Mechanics of flowing ice</div>
+    </div>
+  </div>
+</header>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="software.html" class="active">Software</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="content-wrap">
+  <h1 class="page-title">Software</h1>
+
+  <p>All software is offered freely under the GNU General Public License (v3+). Contributions and collaborations are welcome.</p>
+
+  <div style="margin-top: 1.5rem;">
+    <h2 class="section-title" style="font-size: 1.2rem;">Scientific Tools</h2>
+
+    <ul class="software-list">
+      <li class="software-item">
+        <h3>fourDvel</h3>
+        <p>Inference of time-dependent 3D velocity fields from displacement time series using Bayesian methods.</p>
+      </li>
+      <li class="software-item">
+        <h3>OffsetFields</h3>
+        <p>ISCE plugin for computing SAR and optical offset fields using cross-correlation and other methods.</p>
+      </li>
+      <li class="software-item">
+        <h3>PySAR</h3>
+        <p>Post-processing toolbox for synthetic aperture radar data, including InSAR, PolSAR, GPS, and seismic analysis.</p>
+      </li>
+      <li class="software-item">
+        <h3>Recon3D</h3>
+        <p>3D velocity reconstruction from multi-geometry InSAR observations with Laplacian smoothing priors.</p>
+      </li>
+      <li class="software-item">
+        <h3>VectorDisp</h3>
+        <p>3D displacement field estimation from InSAR line-of-sight measurements using multiple viewing geometries.</p>
+      </li>
+      <li class="software-item">
+        <h3>PolarDecomp</h3>
+        <p>Polarimetric SAR decomposition routines for target characterization and environmental monitoring.</p>
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
+    <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+  </div>
+</footer>
+
+</body>
+</html>

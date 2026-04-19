@@ -1,0 +1,588 @@
+/* ============================================================
+   Caltech Glaciology Group — GitHub Pages
+   Colors and fonts per Caltech Identity Guide
+   ============================================================ */
+
+:root {
+  --caltech-orange: #FF6C0C;
+  --deep-teal: #003B4C;
+  --cool-gray: #76777B;
+  --light-gray: #C8C8C8;
+  --warm-gray: #AAA99F;
+  --bg-light: #f9f9f9;
+  --text-dark: #2c2c2c;
+  --white: #ffffff;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  color: var(--text-dark);
+  background: var(--bg-light);
+  line-height: 1.7;
+}
+
+a {
+  color: var(--deep-teal);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+a:hover {
+  border-bottom-color: var(--caltech-orange);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.site-header {
+  background: var(--deep-teal);
+  color: var(--white);
+  border-bottom: 4px solid var(--caltech-orange);
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.site-title a {
+  color: var(--white);
+  border: none;
+}
+
+.site-title a:hover {
+  border: none;
+}
+
+.site-tagline {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--light-gray);
+  margin-top: 0.2rem;
+}
+
+/* ============================================================
+   Navigation
+   ============================================================ */
+.site-nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--light-gray);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--deep-teal);
+  cursor: pointer;
+  padding: 0.75rem 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 0;
+}
+
+.nav-links li a {
+  display: block;
+  padding: 0.75rem 1.2rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--deep-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  border-bottom-color: var(--caltech-orange);
+  color: var(--caltech-orange);
+}
+
+/* ============================================================
+   Main Content
+   ============================================================ */
+.content-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--deep-teal);
+  margin-bottom: 0.5rem;
+}
+
+.page-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--caltech-orange);
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ============================================================
+   Home Page — Hero
+   ============================================================ */
+.hero {
+  background: var(--white);
+  color: var(--text-dark);
+  padding: 2.5rem 2rem;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.hero-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  border-left: 4px solid var(--caltech-orange);
+  padding-left: 2rem;
+}
+
+.hero-photo {
+  flex: 0 0 200px;
+}
+
+.hero-photo img {
+  width: 200px;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.hero-text h1 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--deep-teal);
+  margin-bottom: 0.3rem;
+}
+
+.hero-text .hero-role {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  color: var(--cool-gray);
+  margin-bottom: 1rem;
+}
+
+.hero-text .hero-bio {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+}
+
+/* ============================================================
+   Home Page — Sections
+   ============================================================ */
+.home-section {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+.home-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--deep-teal);
+  margin-bottom: 0.4rem;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: var(--caltech-orange);
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   Research Areas
+   ============================================================ */
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.research-card {
+  background: var(--white);
+  border: 1px solid var(--light-gray);
+  border-top: 3px solid var(--caltech-orange);
+  padding: 1.5rem;
+  border-radius: 2px;
+  transition: box-shadow 0.2s;
+}
+
+.research-card:hover {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+
+.research-card h3 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  color: var(--deep-teal);
+  margin-bottom: 0.5rem;
+}
+
+.research-card p {
+  font-size: 0.92rem;
+  color: var(--cool-gray);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   People
+   ============================================================ */
+.people-section {
+  margin-bottom: 2.5rem;
+}
+
+.people-section-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--deep-teal);
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--caltech-orange);
+  margin-bottom: 1.2rem;
+}
+
+.person {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.person:last-child {
+  border-bottom: none;
+}
+
+.person-photo {
+  flex: 0 0 120px;
+}
+
+.person-photo img {
+  width: 120px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.person-photo .placeholder {
+  width: 120px;
+  height: 150px;
+  background: var(--light-gray);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cool-gray);
+  font-size: 0.8rem;
+}
+
+.person-info h3 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  color: var(--deep-teal);
+  margin-bottom: 0.15rem;
+}
+
+.person-info .person-title {
+  font-size: 0.9rem;
+  color: var(--caltech-orange);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.person-info .person-contact {
+  font-size: 0.85rem;
+  color: var(--cool-gray);
+  margin-bottom: 0.4rem;
+}
+
+.person-info .person-bio {
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   Publications
+   ============================================================ */
+.pub-group {
+  margin-bottom: 2rem;
+}
+
+.pub-group-title {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--deep-teal);
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--caltech-orange);
+  margin-bottom: 1rem;
+}
+
+.pub-list {
+  list-style: none;
+  counter-reset: pub-counter;
+}
+
+.pub-list.reverse {
+  counter-reset: pub-counter var(--pub-start);
+}
+
+.pub-item {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.pub-item:last-child {
+  border-bottom: none;
+}
+
+.pub-num {
+  flex: 0 0 2rem;
+  text-align: right;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  color: var(--cool-gray);
+}
+
+.pub-links {
+  margin-top: 0.2rem;
+}
+
+.pub-links a {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--caltech-orange);
+  margin-right: 0.6rem;
+  border-bottom: none;
+}
+
+.pub-links a:hover {
+  color: var(--deep-teal);
+}
+
+.pub-note {
+  font-size: 0.88rem;
+  color: var(--cool-gray);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+/* ============================================================
+   Software
+   ============================================================ */
+.software-list {
+  list-style: none;
+}
+
+.software-item {
+  margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.software-item:last-child {
+  border-bottom: none;
+}
+
+.software-item h3 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  color: var(--deep-teal);
+  margin-bottom: 0.3rem;
+}
+
+.software-item h3 a {
+  color: var(--deep-teal);
+}
+
+.software-item h3 a:hover {
+  color: var(--caltech-orange);
+}
+
+.software-item p {
+  font-size: 0.92rem;
+  color: var(--cool-gray);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.contact-info h3 {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  color: var(--deep-teal);
+  margin-bottom: 0.5rem;
+}
+
+.contact-info p {
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer {
+  background: var(--deep-teal);
+  color: var(--light-gray);
+  border-top: 4px solid var(--caltech-orange);
+  padding: 1.5rem 2rem;
+  margin-top: 3rem;
+}
+
+.footer-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+}
+
+.footer-inner a {
+  color: var(--caltech-orange);
+  border: none;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links li a {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #eee;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-links li a:hover,
+  .nav-links li a.active {
+    border-bottom: 1px solid #eee;
+    border-left-color: var(--caltech-orange);
+  }
+
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .research-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .person {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}
