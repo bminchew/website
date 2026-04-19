@@ -74,6 +74,18 @@ TOPICS = [
         ],
     },
     {
+        'slug': 'stabilization',
+        'title': 'Ice Sheet Stabilization',
+        'image': '../images/research_stabilization.jpg',
+        'description': [
+            'Current projections of sea-level rise carry large uncertainties driven by our incomplete understanding of ice sheet dynamics. Our group is exploring whether targeted interventions\u2014such as strategically slowing glacier flow at key locations\u2014could meaningfully reduce the risk of rapid, irreversible sea-level rise. This work combines fundamental glacier mechanics with applied engineering thinking to assess the feasibility, efficacy, and risks of stabilization concepts.',
+            'Through the <a href="https://www.areteglaciers.org/">Ar\u00eate Glacier Initiative</a>, we are taking first steps toward developing the science and technology needed to evaluate glacier stabilization as a complement to emissions reduction.',
+        ],
+        'keys': [
+            'martin2025', 'minchew2020b', 'minchew2018b',
+        ],
+    },
+    {
         'slug': 'hazards',
         'title': 'Hazard Response and Mitigation',
         'image': '../images/research_hazards.jpeg',
