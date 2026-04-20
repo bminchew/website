@@ -1,0 +1,538 @@
+%% ============================================================
+%% Caltech Glaciology Group — Authoritative member database
+%%
+%% This file is the single source of truth for all group members.
+%% It generates:
+%%   - CV mentorship tables (cv_caltech.tex)
+%%   - Website people page (people.html)
+%%   - Research hub connections (research_hub.html)
+%%
+%% Entry types: @postdoc, @primary, @project, @undergrad
+%%
+%% Fields:
+%%   name        = {Display Name}              (required)
+%%   start       = {YYYY}                      (required)
+%%   end         = {YYYY}                      (omit if current)
+%%   department  = {Department, Institution}
+%%   degree      = {PhD or MS}
+%%   grad_year   = {YYYY}                      (year degree conferred)
+%%   grad_inst   = {Institution}               (where degree was earned)
+%%   title       = {Special title or role}
+%%   now         = {Current position}
+%%   photo       = {filename.jpg}              (in images/)
+%%   questions   = {sliding, deform, fracture, stabilize, serve}
+%%   methods     = {sar, theory, compute, ml, field}
+%%   program     = {UROP or MSRP or Project}   (undergrads only)
+%%   note        = {Any extra info}
+%% ============================================================
+
+
+%% ============================================================
+%% Postdoctoral researchers
+%% ============================================================
+
+@postdoc{morgan-witts,
+    name        = {Natasha Morgan-Witts},
+    start       = {2026},
+    grad_inst   = {U. Wisconsin, Madison},
+    degree      = {PhD},
+    grad_year   = {26},
+    title       = {starting July 2026},
+    photo       = {NatashaMorganWitts-e1738084186427-300x300.png},
+    questions   = {stabilize},
+    methods     = {compute, theory}}
+
+@postdoc{lu,
+    name        = {George Lu},
+    start       = {2026},
+    grad_inst   = {Columbia},
+    degree      = {PhD},
+    grad_year   = {26},
+    title       = {starting October 2026},
+    photo       = {george_lu.jpg},
+    questions   = {stabilize},
+    methods     = {compute, theory, field}}
+
+@postdoc{kramer,
+    name        = {Evan Kramer},
+    start       = {2025},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {25},
+    title       = {Caltech Seismo Lab Director's Fellow},
+    photo       = {evan_kramer-250x308.png},
+    questions   = {sliding, deform, stabilize},
+    methods     = {sar, compute, theory}}
+
+@postdoc{ultee,
+    name        = {Elizabeth (Lizz) Ultee},
+    display_name = {Lizz Ultee},
+    start       = {2018},
+    end         = {2021},
+    grad_inst   = {U. Michigan},
+    degree      = {PhD},
+    grad_year   = {18},
+    now         = {research scientist at NASA Goddard Space Flight Center and Morgan State University},
+    photo       = {ultee.jpg}}
+
+@postdoc{riel,
+    name        = {Bryan Riel},
+    start       = {2019},
+    end         = {2022},
+    grad_inst   = {Caltech},
+    degree      = {PhD},
+    grad_year   = {17},
+    now         = {faculty at Zhejiang University},
+    photo       = {bryan_riel.jpg}}
+
+
+%% ============================================================
+%% Graduate students, as a primary advisor
+%% ============================================================
+
+@primary{chamberlin,
+    name        = {Thatcher Chamberlin},
+    start       = {2024},
+    department  = {PAOC},
+    degree      = {PhD},
+    photo       = {thatcher_chamberlin.jpg},
+    questions   = {sliding, deform, stabilize},
+    methods     = {theory, compute}}
+
+@primary{filter,
+    name        = {Max Filter},
+    start       = {2023},
+    department  = {MIT EAPS},
+    degree      = {PhD},
+    note        = {Geophysics},
+    photo       = {max_filter.jpg},
+    questions   = {sliding, deform, fracture},
+    methods     = {sar, compute, ml}}
+
+@primary{wells-moran,
+    name        = {Sarah Wells-Moran},
+    start       = {2023},
+    end         = {2025},
+    grad_inst   = {MIT},
+    degree      = {MS},
+    grad_year   = {25},
+    now         = {PhD student at University of Chicago},
+    photo       = {sarah_wells-moran.png}}
+
+@primary{ovienmhada,
+    name        = {Ufuoma Ovienmhada},
+    start       = {2022},
+    end         = {2024},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {24},
+    photo       = {headshot_Ovienmhada.jpg}}
+
+@primary{narayanan,
+    name        = {Neosha Narayanan},
+    start       = {2021},
+    end         = {2023},
+    grad_inst   = {MIT},
+    degree      = {MS},
+    grad_year   = {23},
+    now         = {PhD student at Georgia Tech},
+    photo       = {Neosha_Narayanan_headshot_1_edit.jpg}}
+
+@primary{elgart,
+    name        = {Faye Hendley Elgart},
+    start       = {2019},
+    end         = {2025},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {25},
+    now         = {postdoc at Laboratoire de Glaciologie at the Universit\'{e} libre de Bruxelles},
+    photo       = {faye.jpg}}
+
+@primary{linick,
+    name        = {Justin Linick},
+    start       = {2019},
+    department  = {MIT EAPS},
+    degree      = {PhD},
+    note        = {Geophysics},
+    photo       = {justin.jpg},
+    questions   = {sliding, deform},
+    methods     = {sar, theory}}
+
+@primary{millstein,
+    name        = {Joanna Millstein},
+    start       = {2018},
+    end         = {2023},
+    grad_inst   = {MIT-WHOI JP},
+    degree      = {PhD},
+    grad_year   = {23},
+    now         = {postdoc at Colorado School of Mines},
+    photo       = {joanna_eaps.jpg}}
+
+@primary{clerc,
+    name        = {Fiona Clerc},
+    start       = {2018},
+    end         = {2022},
+    grad_inst   = {MIT-WHOI JP},
+    degree      = {PhD},
+    grad_year   = {22},
+    now         = {faculty at Stony Brook University},
+    photo       = {fiona_clerc.jpg}}
+
+@primary{ranganathan,
+    name        = {Meghana Ranganathan},
+    start       = {2018},
+    end         = {2022},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {22},
+    now         = {faculty at University of Chicago},
+    photo       = {meghana_ranganathan.jpg}}
+
+@primary{kanniah,
+    name        = {Brindha Kanniah},
+    start       = {2018},
+    end         = {2019},
+    grad_inst   = {MIT},
+    degree      = {MS},
+    grad_year   = {19},
+    photo       = {brindha_kanniah.jpeg}}
+
+
+%% ============================================================
+%% Graduate students, as a secondary or project advisor
+%% ============================================================
+
+@project{fellows,
+    name        = {Jackson Fellows},
+    start       = {2025},
+    department  = {Caltech Seismo Lab},
+    degree      = {PhD},
+    photo       = {jackson_fellows.jpg},
+    questions   = {sliding},
+    methods     = {sar, theory}}
+
+@project{ikwut-ukwa,
+    name        = {Mma Ikwut-Ukwa},
+    start       = {2025},
+    department  = {Caltech GPS (Planetary)},
+    degree      = {PhD},
+    photo       = {mma_ikwut-ukwa.jpg},
+    questions   = {fracture, serve},
+    methods     = {sar, compute}}
+
+@project{reynolds,
+    name        = {Ben Reynolds},
+    start       = {2025},
+    department  = {Caltech GPS (Geology)},
+    degree      = {PhD},
+    photo       = {ben_reynolds.jpg},
+    questions   = {sliding, serve},
+    methods     = {sar, field}}
+
+@project{dworak,
+    name        = {Elena Dworak},
+    start       = {2025},
+    department  = {Caltech ESE},
+    degree      = {PhD},
+    photo       = {elena_dworak.jpg},
+    questions   = {fracture, serve},
+    methods     = {sar, compute}}
+
+@project{li,
+    name        = {Yi Li},
+    start       = {2025},
+    department  = {Caltech Seismo Lab},
+    degree      = {PhD},
+    photo       = {yi_li.jpg},
+    questions   = {sliding, fracture},
+    methods     = {sar, theory}}
+
+@project{needell,
+    name        = {Caroline Needell},
+    start       = {2024},
+    department  = {MIT-WHOI Joint Program},
+    degree      = {PhD},
+    photo       = {caroline_needell.jpeg},
+    questions   = {sliding, deform, fracture},
+    methods     = {sar, field}}
+
+@project{miller,
+    name        = {Alex Miller},
+    start       = {2023},
+    department  = {MIT AeroAstro},
+    degree      = {PhD},
+    photo       = {asmiller.jpg},
+    questions   = {stabilize, serve},
+    methods     = {sar, compute, ml}}
+
+@project{mouchon,
+    name        = {Caroline Mouchon},
+    start       = {2022},
+    department  = {MIT EAPS (Geophysics)},
+    degree      = {PhD},
+    photo       = {caroline_mouchon.png},
+    questions   = {sliding, deform},
+    methods     = {sar, theory}}
+
+@project{dewald,
+    name        = {Annick Dewald},
+    start       = {2022},
+    end         = {2024},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {24},
+    department  = {AeroAstro},
+    now         = {founding faculty at Greenway Institute},
+    photo       = {AnnickDewald-portrait.png}}
+
+@project{oneil,
+    name        = {Grace O'Neil},
+    start       = {2021},
+    end         = {2023},
+    department  = {MIT EAPS (PAOC)},
+    degree      = {PhD},
+    photo       = {grace_oneal.jpeg}}
+
+@project{sun,
+    name        = {Yudong Sun},
+    start       = {2021},
+    end         = {2023},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {25},
+    department  = {MIT EAPS (Geophysics)},
+    now         = {postdoc at Stanford University},
+    photo       = {yudong_headshot.jpg}}
+
+@project{lubeck,
+    name        = {Mila Lubeck},
+    start       = {2021},
+    end         = {2023},
+    department  = {MIT EAPS (Geophysics)},
+    degree      = {PhD},
+    photo       = {mila_picture.png}}
+
+@project{hunter,
+    name        = {Pierce Hunter},
+    start       = {2019},
+    end         = {2020},
+    grad_inst   = {UO},
+    degree      = {MS},
+    grad_year   = {20},
+    photo       = {pierce_hunter.jpg}}
+
+@project{tamre,
+    name        = {Erik Tamre},
+    start       = {2019},
+    end         = {2024},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {24},
+    now         = {postdoc at Dartmouth College},
+    photo       = {erik_tamre.jpg}}
+
+@project{shah,
+    name        = {Kasturi Shah},
+    start       = {2018},
+    end         = {2022},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {22},
+    now         = {McDonnell Foundation Research Fellow at University of Cambridge},
+    photo       = {kasturi_shah.jpg}}
+
+@project{wilcots,
+    name        = {Julia Wilcots},
+    start       = {2018},
+    end         = {2019},
+    grad_inst   = {MIT},
+    degree      = {PhD},
+    grad_year   = {22},
+    now         = {faculty at University of Minnesota, Twin Cities},
+    photo       = {julia_wilcots.jpg}}
+
+
+%% ============================================================
+%% Undergraduate students
+%% ============================================================
+
+@undergrad{cole,
+    name        = {Justin Cole},
+    start       = {2024},
+    department  = {MIT},
+    program     = {UROP}}
+
+@undergrad{cao,
+    name        = {Rina Cao},
+    start       = {2023},
+    end         = {2025},
+    department  = {MIT},
+    program     = {UROP}}
+
+@undergrad{guerre,
+    name        = {Kyle Guerre},
+    start       = {2023},
+    end         = {2023},
+    department  = {MIT},
+    program     = {UROP}}
+
+@undergrad{bridges,
+    name        = {Kristine Bridges},
+    start       = {2023},
+    end         = {2023},
+    department  = {MIT},
+    program     = {UROP}}
+
+@undergrad{corbo-ferreira,
+    name        = {Florencia Corbo-Ferreira},
+    start       = {2021},
+    end         = {2021},
+    department  = {U. of Florida},
+    program     = {MSRP}}
+
+@undergrad{pisinger,
+    name        = {Mateo Pisinger},
+    start       = {2021},
+    end         = {2021},
+    department  = {MIT},
+    program     = {UROP}}
+
+@undergrad{conti,
+    name        = {Ryan Conti},
+    start       = {2021},
+    end         = {2022},
+    department  = {Math + Comp Sci, MIT},
+    program     = {UROP}}
+
+@undergrad{rosario,
+    name        = {Jon Rosario},
+    start       = {2021},
+    end         = {2021},
+    department  = {Math + Comp Sci, MIT},
+    program     = {UROP}}
+
+@undergrad{narayanan-urop,
+    name        = {Neosha Narayanan},
+    start       = {2020},
+    end         = {2020},
+    department  = {Mat. Sci., MIT},
+    program     = {UROP}}
+
+@undergrad{wells-moran-urop,
+    name        = {Sarah Wells-Moran},
+    start       = {2020},
+    end         = {2023},
+    department  = {Wellesley College},
+    program     = {UROP}}
+
+@undergrad{filter-urop,
+    name        = {Max Filter},
+    start       = {2020},
+    end         = {2023},
+    department  = {Computer Science, U. of Virginia},
+    program     = {Project}}
+
+@undergrad{barotta,
+    name        = {Jack-William Barotta},
+    start       = {2020},
+    end         = {2021},
+    department  = {Math, MIT},
+    program     = {UROP}}
+
+@undergrad{alvarez,
+    name        = {Gabriela Alvarez},
+    start       = {2020},
+    end         = {2020},
+    department  = {Mech. Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{ambrosio,
+    name        = {Jordan Ambrosio},
+    start       = {2020},
+    end         = {2020},
+    department  = {Mech. Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{baez,
+    name        = {Stephanie Baez},
+    start       = {2020},
+    end         = {2020},
+    department  = {Civil Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{chau,
+    name        = {Anna Chau},
+    start       = {2020},
+    end         = {2020},
+    department  = {EE + Comp. Sci, MIT},
+    program     = {UROP}}
+
+@undergrad{flores,
+    name        = {Adriana Flores},
+    start       = {2020},
+    end         = {2020},
+    department  = {AeroAstro, MIT},
+    program     = {UROP}}
+
+@undergrad{gannon,
+    name        = {Meriah Gannon},
+    start       = {2020},
+    end         = {2020},
+    department  = {Env. Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{paik,
+    name        = {Adelynn Paik},
+    start       = {2020},
+    end         = {2020},
+    department  = {Sys. Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{vu,
+    name        = {Kristopher Vu},
+    start       = {2020},
+    end         = {2020},
+    department  = {Mech. Eng. + Comp. Sci, MIT},
+    program     = {UROP}}
+
+@undergrad{yoon,
+    name        = {Joyce Yoon},
+    start       = {2020},
+    end         = {2020},
+    department  = {Mech. Eng., MIT},
+    program     = {UROP}}
+
+@undergrad{lauer,
+    name        = {Benjamin Lauer},
+    start       = {2015},
+    end         = {2015},
+    department  = {Universit\'{e} de Lorraine},
+    program     = {Project}}
+
+@undergrad{rains,
+    name        = {Christine Rains},
+    start       = {2015},
+    end         = {2015},
+    department  = {DEVELOP-JPL},
+    program     = {Project}}
+
+@undergrad{heo,
+    name        = {Jerry Heo},
+    start       = {2015},
+    end         = {2015},
+    department  = {DEVELOP-JPL},
+    program     = {Project}}
+
+@undergrad{higa,
+    name        = {Erika Higa},
+    start       = {2015},
+    end         = {2015},
+    department  = {DEVELOP-JPL},
+    program     = {Project}}
+
+@undergrad{akhtar,
+    name        = {Sandia Akhtar},
+    start       = {2013},
+    end         = {2013},
+    department  = {Caltech},
+    program     = {Project}}
