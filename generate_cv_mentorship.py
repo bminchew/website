@@ -144,9 +144,9 @@ def generate_mentorship_tex(members):
     """Generate the full mentorship LaTeX section."""
     postdocs = sorted(get_by_type(members, 'postdoc'),
                       key=lambda m: -int(m['start']))
-    primary = sorted(get_by_type(members, 'primary'),
+    primary = sorted(get_by_type(members, 'gradprimary'),
                      key=lambda m: -int(m['start']))
-    project = sorted(get_by_type(members, 'project'),
+    project = sorted(get_by_type(members, 'gradproject'),
                      key=lambda m: -int(m['start']))
     undergrads = sorted(get_by_type(members, 'undergrad'),
                         key=lambda m: -int(m['start']))
@@ -240,8 +240,8 @@ def main():
 
     print(f'Updated CV mentorship section')
     print(f'  {len(get_by_type(members, "postdoc"))} postdocs')
-    print(f'  {len(get_by_type(members, "primary"))} primary advisees')
-    print(f'  {len(get_by_type(members, "project"))} project advisees')
+    print(f'  {len(get_by_type(members, "gradprimary"))} primary advisees')
+    print(f'  {len(get_by_type(members, "gradproject"))} project advisees')
     print(f'  {len(get_by_type(members, "undergrad"))} undergrads')
 
 

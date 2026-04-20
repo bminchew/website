@@ -120,8 +120,8 @@ def main():
 
     # Categorize
     postdocs = get_by_type(members, 'postdoc')
-    primary = get_by_type(members, 'primary')
-    project = get_by_type(members, 'project')
+    primary = get_by_type(members, 'gradprimary')
+    project = get_by_type(members, 'gradproject')
 
     current_postdocs = sorted(
         [m for m in postdocs if m['is_current']],
