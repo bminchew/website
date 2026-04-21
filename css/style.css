@@ -198,19 +198,33 @@ img {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
-  border-left: 4px solid var(--caltech-orange);
-  padding-left: 2rem;
 }
 
-.hero-photo {
-  flex: 0 0 200px;
+.hero-sidebar {
+  flex: 0 0 220px;
 }
 
-.hero-photo img {
-  width: 200px;
-  height: 240px;
+.hero-sidebar img {
+  width: 220px;
   object-fit: cover;
   border-radius: 3px;
+}
+
+.hero-contact {
+  margin-top: 1.2rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--cool-gray);
+}
+
+.hero-contact .contact-label {
+  font-weight: 600;
+  color: var(--deep-teal);
+}
+
+.hero-contact a {
+  color: var(--deep-teal);
 }
 
 .hero-text h1 {
@@ -218,20 +232,44 @@ img {
   font-size: 2rem;
   font-weight: 700;
   color: var(--deep-teal);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
-.hero-text .hero-role {
+.hero-text .hero-title {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--cool-gray);
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.hero-text .hero-education {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--cool-gray);
+  margin-bottom: 1.2rem;
 }
 
 .hero-text .hero-bio {
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.8;
   color: var(--text-dark);
+}
+
+.hero-text .hero-bio p {
+  margin-bottom: 0.8rem;
+}
+
+.hero-text .hero-links {
+  margin-top: 0.8rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+}
+
+.hero-text .hero-links a {
+  color: var(--caltech-orange);
+  font-weight: 600;
+  margin-right: 1rem;
 }
 
 /* ============================================================
@@ -669,7 +707,17 @@ a.research-card:hover {
 
   .hero-inner {
     flex-direction: column;
-    text-align: center;
+  }
+
+  .hero-sidebar {
+    flex: none;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .hero-sidebar img {
+    width: 140px;
   }
 
   .research-grid {

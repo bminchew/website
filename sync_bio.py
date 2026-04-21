@@ -43,14 +43,14 @@ def main():
     with open(index_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # Replace content between hero-bio div tags
-    pattern = r'(<div class="hero-bio">\s*\n)\s*.*?(\n\s*</div>)'
-    replacement = r'\1        ' + bio + r'\2'
+    # Replace content between AUTO BIO markers
+    pattern = r'(<!-- BEGIN AUTO BIO -->\n).*?(\n\s*<!-- END AUTO BIO -->)'
+    replacement = r'\1        <p>' + bio + r'</p>\2'
     new_html, count = re.subn(pattern, replacement, html, count=1, flags=re.DOTALL)
 
     if count == 0:
-        print('ERROR: could not find hero-bio div in index.html')
-        sys.exit(1)
+        print('NOTE: no AUTO BIO markers in index.html, skipping bio sync')
+        return
 
     with open(index_path, 'w', encoding='utf-8') as f:
         f.write(new_html)
