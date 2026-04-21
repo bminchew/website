@@ -45,6 +45,11 @@ def build_member_lookup(members):
         # Bib last name for matching
         lastname = get_bib_lastname(m['name'])
 
+        # Keep the entry with the latest end year if duplicate names exist
+        existing = lookup.get(display)
+        if existing and existing['end_year'] and end_year and existing['end_year'] >= end_year:
+            continue
+
         lookup[display] = {
             'end_year': end_year,
             'lastname': lastname,
