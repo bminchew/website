@@ -188,14 +188,14 @@ img {
 .hero {
   background: var(--white);
   color: var(--text-dark);
-  padding: 2.5rem 2rem;
+  padding: 0;
   border-bottom: 1px solid var(--light-gray);
 }
 
 .hero-inner {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 1.5rem 2rem 2.5rem;
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
