@@ -57,7 +57,7 @@ def find_papers(lastname, entries, end_year, window=YEARS_WINDOW):
     results = []
     for key, entry in entries.items():
         author = entry.get('author', '')
-        if not re.search(re.escape(lastname), author, re.IGNORECASE):
+        if not re.search(r'\b' + re.escape(lastname) + r'\b', author):
             continue
         journal = entry.get('journal', '').lower()
         if 'in prep' in journal or 'submitted' in journal or 'in revision' in journal:
