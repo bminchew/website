@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research &mdash; Caltech Glaciology</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ============================================================
+       Research Hub — Prototype Styles
+       ============================================================ */
+
+    .hub-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      margin: 2rem auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    /* SVG layer for connection lines */
+    .hub-lines {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hub-line {
+      stroke: #C8C8C8;
+      stroke-width: 1.5;
+      transition: stroke 0.3s, stroke-width 0.3s;
+    }
+
+    /* Questions — positioned around center */
+    .hub-question {
+      position: absolute;
+      text-align: center;
+      z-index: 2;
+      max-width: 160px;
+    }
+
+    .hub-question-bubble {
+      background: #003B4C;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.4;
+      padding: 0.8rem 1rem;
+      border-radius: 50%;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    .hub-question-bubble:hover {
+      background: #FF6C0C;
+      transform: scale(1.08);
+    }
+
+    /* People — small photo circles */
+    .hub-person {
+      position: absolute;
+      z-index: 1;
+      text-align: center;
+      width: 70px;
+      cursor: default;
+      transition: transform 0.3s;
+    }
+
+    .hub-person:hover {
+      transform: scale(1.15);
+      z-index: 10;
+    }
+
+    /* Method colors — Caltech palette */
+    :root {
+      --method-sar: #FF6C0C;     /* Caltech Orange — InSAR & Remote Sensing */
+      --method-theory: #003B4C;  /* Deep Teal — Mathematical Theory */
+      --method-compute: #644B78; /* Purple — Computational Models */
+      --method-ml: #1E988A;      /* Teal — Machine Learning */
+      --method-field: #73A950;   /* Green — Field Observations */
+    }
+
+    /* Conic gradient border ring */
+    .hub-person-ring {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto;
+      padding: 3px;
+      /* default gray; overridden per-person via inline style */
+      background: #C8C8C8;
+      transition: opacity 0.3s;
+    }
+
+    .hub-person-photo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 2px solid #fff;
+    }
+
+    .hub-person-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #e0e0e0;
+      border: 2px solid #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: #999;
+    }
+
+    .hub-person-name {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.65rem;
+      color: #76777B;
+      margin-top: 0.2rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    /* Tooltip on hover */
+    .hub-person-tooltip {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #003B4C;
+      color: #fff;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.75rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 20;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .hub-person:hover .hub-person-tooltip {
+      display: block;
+    }
+
+    /* Method legend */
+    .hub-legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding: 0.8rem 0;
+    }
+
+    .hub-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #76777B;
+    }
+
+    .hub-legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    /* Highlight connections on question hover */
+    .hub-question:hover ~ .hub-lines .hub-line,
+    .hub-container:not(:hover) .hub-line {
+      stroke: #C8C8C8;
+      stroke-width: 1.5;
+    }
+
+    /* Responsive — hide hub on mobile, show fallback cards */
+    .mobile-fallback { display: none; }
+
+    @media (max-width: 768px) {
+      .hub-container, .hub-legend { display: none; }
+      .mobile-fallback { display: block; }
+      .hub-question-bubble {
+        width: 100px;
+        height: 100px;
+        font-size: 0.7rem;
+        padding: 0.5rem;
+      }
+      .hub-person-photo, .hub-person-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+      .hub-person {
+        width: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div>
+      <div class="site-title"><a href="index.html"><span class="caltech">Caltech</span> <span class="group-name">Glaciology</span></a></div>
+      <div class="site-tagline">Mechanics of flowing ice</div>
+    </div>
+  </div>
+</header>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="software.html">Software</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main" class="content-wrap">
+  <h1 class="page-title">Research</h1>
+
+  <p>We seek to understand connections between various components of the Earth system, their response to climate change, and human impact on the environment. Our research is organized around five questions.</p>
+
+  <div class="hub-container" id="hub">
+
+    <!-- SVG connection lines (drawn by JS below) -->
+    <svg class="hub-lines" id="hub-lines" viewBox="0 0 900 900" preserveAspectRatio="xMidYMid meet"></svg>
+
+    <!-- Questions — pentagon at ~28% radius from center -->
+    <div class="hub-question" id="q-sliding" style="left: 50%; top: 15%; transform: translate(-50%, -50%);"
+         data-people="chamberlin,filter,fellows,kramer,li,linick,mouchon,needell,reynolds">
+      <div class="hub-question-bubble">What controls glacier sliding?</div>
+    </div>
+
+    <div class="hub-question" id="q-deform" style="left: 73%; top: 35%; transform: translate(-50%, -50%);"
+         data-people="chamberlin,filter,kramer,linick,mouchon,needell">
+      <div class="hub-question-bubble">How does ice deform?</div>
+    </div>
+
+    <div class="hub-question" id="q-fracture" style="left: 64%; top: 62%; transform: translate(-50%, -50%);"
+         data-people="dworak,filter,ikwut-ukwa,li,needell">
+      <div class="hub-question-bubble">Why does ice fracture?</div>
+    </div>
+
+    <div class="hub-question" id="q-stabilize" style="left: 36%; top: 62%; transform: translate(-50%, -50%);"
+         data-people="chamberlin,kramer,lu,morgan-witts,miller">
+      <div class="hub-question-bubble">Can we stabilize ice sheets?</div>
+    </div>
+
+    <div class="hub-question" id="q-serve" style="left: 27%; top: 35%; transform: translate(-50%, -50%);"
+         data-people="miller,dworak,ikwut-ukwa,reynolds">
+      <div class="hub-question-bubble" style="font-size: 0.78rem;">How else can the tools of science serve people?</div>
+    </div>
+
+    <!-- People — outer ring, with data-methods for conic gradient borders -->
+    <!-- Methods: sar, theory, compute, ml, field -->
+
+    <div class="hub-person" id="p-linick" style="left: 59%; top: 1%;" data-questions="q-sliding,q-deform" data-methods="sar,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/justin.jpg" alt="Justin Linick"></div>
+      <div class="hub-person-name">Linick</div>
+      <div class="hub-person-tooltip">Justin Linick &middot; PhD student, MIT EAPS</div>
+    </div>
+
+    <div class="hub-person" id="p-kramer" style="left: 73%; top: 3%;" data-questions="q-sliding,q-deform,q-stabilize" data-methods="sar,compute,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/evan_kramer-250x308.png" alt="Evan Kramer"></div>
+      <div class="hub-person-name">Kramer</div>
+      <div class="hub-person-tooltip">Evan Kramer &middot; Postdoc</div>
+    </div>
+
+    <div class="hub-person" id="p-mouchon" style="left: 86%; top: 14%;" data-questions="q-sliding,q-deform" data-methods="sar,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/caroline_mouchon.png" alt="Caroline Mouchon"></div>
+      <div class="hub-person-name">Mouchon</div>
+      <div class="hub-person-tooltip">Caroline Mouchon &middot; PhD student, MIT EAPS</div>
+    </div>
+
+    <div class="hub-person" id="p-needell" style="left: 92%; top: 32%;" data-questions="q-sliding,q-deform,q-fracture" data-methods="sar,field">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/caroline_needell.jpeg" alt="Caroline Needell"></div>
+      <div class="hub-person-name">Needell</div>
+      <div class="hub-person-tooltip">Caroline Needell &middot; PhD student, MIT-WHOI</div>
+    </div>
+
+    <div class="hub-person" id="p-filter" style="left: 92%; top: 50%;" data-questions="q-sliding,q-deform,q-fracture" data-methods="sar,compute,ml">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/max_filter.jpg" alt="Max Filter"></div>
+      <div class="hub-person-name">Filter</div>
+      <div class="hub-person-tooltip">Max Filter &middot; PhD student, MIT EAPS</div>
+    </div>
+
+    <div class="hub-person" id="p-ikwut-ukwa" style="left: 85%; top: 68%;" data-questions="q-fracture,q-serve" data-methods="sar,compute">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/mma_ikwut-ukwa.jpg" alt="Mma Ikwut-Ukwa"></div>
+      <div class="hub-person-name">Ikwut-Ukwa</div>
+      <div class="hub-person-tooltip">Mma Ikwut-Ukwa &middot; PhD student, Caltech GPS</div>
+    </div>
+
+    <div class="hub-person" id="p-dworak" style="left: 75%; top: 80%;" data-questions="q-fracture,q-serve" data-methods="sar,compute">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/elena_dworak.jpg" alt="Elena Dworak"></div>
+      <div class="hub-person-name">Dworak</div>
+      <div class="hub-person-tooltip">Elena Dworak &middot; PhD student, Caltech ESE</div>
+    </div>
+
+    <div class="hub-person" id="p-li" style="left: 58%; top: 87%;" data-questions="q-sliding,q-fracture" data-methods="sar,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/yi_li.jpg" alt="Yi Li"></div>
+      <div class="hub-person-name">Li</div>
+      <div class="hub-person-tooltip">Yi Li &middot; PhD student, Caltech Seismo Lab</div>
+    </div>
+
+    <div class="hub-person" id="p-lu" style="left: 42%; top: 87%;" data-questions="q-stabilize" data-methods="compute,theory,field">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/george_lu.jpg" alt="George Lu"></div>
+      <div class="hub-person-name">Lu</div>
+      <div class="hub-person-tooltip">George Lu &middot; Postdoc (starting Oct 2026)</div>
+    </div>
+
+    <div class="hub-person" id="p-morgan-witts" style="left: 25%; top: 80%;" data-questions="q-stabilize" data-methods="compute,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/NatashaMorganWitts-e1738084186427-300x300.png" alt="Natasha Morgan-Witts"></div>
+      <div class="hub-person-name">Morgan-Witts</div>
+      <div class="hub-person-tooltip">Natasha Morgan-Witts &middot; Postdoc (starting Jul 2026)</div>
+    </div>
+
+    <div class="hub-person" id="p-miller" style="left: 12%; top: 68%;" data-questions="q-stabilize,q-serve" data-methods="sar,compute,ml">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/asmiller.jpg" alt="Alex Miller"></div>
+      <div class="hub-person-name">Miller</div>
+      <div class="hub-person-tooltip">Alex Miller &middot; PhD student, MIT AeroAstro</div>
+    </div>
+
+    <div class="hub-person" id="p-reynolds" style="left: 5%; top: 50%;" data-questions="q-sliding,q-serve" data-methods="sar,field">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/ben_reynolds.jpg" alt="Ben Reynolds"></div>
+      <div class="hub-person-name">Reynolds</div>
+      <div class="hub-person-tooltip">Ben Reynolds &middot; PhD student, Caltech GPS</div>
+    </div>
+
+    <div class="hub-person" id="p-chamberlin" style="left: 8%; top: 32%;" data-questions="q-sliding,q-deform,q-stabilize" data-methods="theory,compute">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/thatcher_chamberlin.jpg" alt="Thatcher Chamberlin"></div>
+      <div class="hub-person-name">Chamberlin</div>
+      <div class="hub-person-tooltip">Thatcher Chamberlin &middot; PhD student, MIT PAOC</div>
+    </div>
+
+    <div class="hub-person" id="p-fellows" style="left: 22%; top: 6%;" data-questions="q-sliding" data-methods="sar,theory">
+      <div class="hub-person-ring"><img class="hub-person-photo" src="images/jackson_fellows.jpg" alt="Jackson Fellows"></div>
+      <div class="hub-person-name">Fellows</div>
+      <div class="hub-person-tooltip">Jackson Fellows &middot; PhD student, Caltech Seismo Lab</div>
+    </div>
+
+  </div>
+
+  <div class="hub-legend">
+    <div class="hub-legend-item"><div class="hub-legend-dot" style="background: var(--method-sar);"></div> Remote Sensing</div>
+    <div class="hub-legend-item"><div class="hub-legend-dot" style="background: var(--method-theory);"></div> Mathematical Theory</div>
+    <div class="hub-legend-item"><div class="hub-legend-dot" style="background: var(--method-compute);"></div> Computational Models</div>
+    <div class="hub-legend-item"><div class="hub-legend-dot" style="background: var(--method-ml);"></div> Machine Learning</div>
+    <div class="hub-legend-item"><div class="hub-legend-dot" style="background: var(--method-field);"></div> Field Observations</div>
+  </div>
+
+  <!-- Mobile fallback: topic cards (hidden on desktop) -->
+  <div class="mobile-fallback">
+    <div class="research-grid">
+      <a href="research/basal-mechanics.html" class="research-card">
+        <h3>What controls glacier sliding?</h3>
+        <p>Mechanics of deformable glacier beds, basal hydrology, and the coupling between ice flow and bed deformation.</p>
+      </a>
+      <a href="research/shear-margins.html" class="research-card">
+        <h3>How does ice deform?</h3>
+        <p>Ice rheology in shear margins, the role of damage, heating, melting, and crystallographic fabric development.</p>
+      </a>
+      <a href="research/calving.html" class="research-card">
+        <h3>Why does ice fracture?</h3>
+        <p>Fracture mechanics, rift propagation, and calving in ice shelves and their implications for ice sheet mass loss.</p>
+      </a>
+      <a href="research/stabilization.html" class="research-card">
+        <h3>Can we stabilize ice sheets?</h3>
+        <p>Exploring whether targeted interventions can slow glacier retreat and reduce the risk of rapid sea-level rise.</p>
+      </a>
+      <a href="research/hazards.html" class="research-card">
+        <h3>How else can the tools of science serve people?</h3>
+        <p>Remote sensing for environmental hazard response, including marine oil spills, wildfires, and beyond.</p>
+      </a>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-row">
+      <span>California Institute of Technology &middot; 1200 E. California Blvd. &middot; Pasadena, CA 91125</span>
+      <span><a href="mailto:bminchew@caltech.edu">bminchew@caltech.edu</a></span>
+    </div>
+    <div class="footer-row">
+      <span>&copy; California Institute of Technology</span>
+      <div class="footer-links">
+        <a href="https://digitalaccessibility.caltech.edu/">Digital Accessibility</a>
+        <a href="https://www.caltech.edu/privacy-notice">Privacy Notice</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Draw connection lines between people and their questions
+(function() {
+  // Method color map
+  const methodColors = {
+    'sar':     '#FF6C0C',
+    'theory':  '#003B4C',
+    'compute': '#644B78',
+    'ml':      '#1E988A',
+    'field':   '#73A950',
+  };
+
+  // Generate conic gradient borders from data-methods
+  document.querySelectorAll('.hub-person').forEach(person => {
+    const methods = (person.dataset.methods || '').split(',').filter(Boolean);
+    const ring = person.querySelector('.hub-person-ring');
+    if (!ring || methods.length === 0) return;
+
+    const sliceSize = 360 / methods.length;
+    const stops = [];
+    methods.forEach((m, i) => {
+      const color = methodColors[m.trim()] || '#C8C8C8';
+      stops.push(`${color} ${i * sliceSize}deg ${(i + 1) * sliceSize}deg`);
+    });
+    ring.style.background = `conic-gradient(${stops.join(', ')})`;
+  });
+
+  const hub = document.getElementById('hub');
+  const svg = document.getElementById('hub-lines');
+  const hubRect = hub.getBoundingClientRect();
+
+  function getCenter(el) {
+    const r = el.getBoundingClientRect();
+    return {
+      x: ((r.left + r.width/2 - hubRect.left) / hubRect.width) * 900,
+      y: ((r.top + r.height/2 - hubRect.top) / hubRect.height) * 900
+    };
+  }
+
+  function drawLines() {
+    svg.innerHTML = '';
+    const hubRect2 = hub.getBoundingClientRect();
+
+    document.querySelectorAll('.hub-person').forEach(person => {
+      const questions = (person.dataset.questions || '').split(',');
+      const pCenter = getCenter(person);
+
+      questions.forEach(qId => {
+        const q = document.getElementById(qId);
+        if (!q) return;
+        const qCenter = getCenter(q);
+
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', pCenter.x);
+        line.setAttribute('y1', pCenter.y);
+        line.setAttribute('x2', qCenter.x);
+        line.setAttribute('y2', qCenter.y);
+        line.classList.add('hub-line');
+        line.dataset.person = person.id;
+        line.dataset.question = qId;
+        svg.appendChild(line);
+      });
+    });
+  }
+
+  // Highlight on question hover
+  document.querySelectorAll('.hub-question').forEach(q => {
+    q.addEventListener('mouseenter', () => {
+      const qId = q.id;
+      document.querySelectorAll('.hub-line').forEach(line => {
+        if (line.dataset.question === qId) {
+          line.style.stroke = '#FF6C0C';
+          line.style.strokeWidth = '2.5';
+        } else {
+          line.style.stroke = '#e8e8e8';
+          line.style.strokeWidth = '1';
+        }
+      });
+      // Highlight connected people
+      const people = (q.dataset.people || '').split(',');
+      document.querySelectorAll('.hub-person').forEach(p => {
+        const pKey = p.id.replace('p-', '');
+        if (people.includes(pKey)) {
+          p.style.opacity = '1';
+          const ring = p.querySelector('.hub-person-ring');
+          if (ring) ring.style.boxShadow = '0 0 0 3px #FF6C0C';
+        } else {
+          p.style.opacity = '0.3';
+        }
+      });
+    });
+
+    q.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.hub-line').forEach(line => {
+        line.style.stroke = '';
+        line.style.strokeWidth = '';
+      });
+      document.querySelectorAll('.hub-person').forEach(p => {
+        p.style.opacity = '';
+        const ring = p.querySelector('.hub-person-ring');
+        if (ring) ring.style.boxShadow = '';
+      });
+    });
+  });
+
+  // Highlight on person hover
+  document.querySelectorAll('.hub-person').forEach(person => {
+    person.addEventListener('mouseenter', () => {
+      const pId = person.id;
+      document.querySelectorAll('.hub-line').forEach(line => {
+        if (line.dataset.person === pId) {
+          line.style.stroke = '#FF6C0C';
+          line.style.strokeWidth = '2.5';
+        } else {
+          line.style.stroke = '#e8e8e8';
+          line.style.strokeWidth = '1';
+        }
+      });
+      // Highlight connected questions
+      const questions = (person.dataset.questions || '').split(',');
+      document.querySelectorAll('.hub-question').forEach(q => {
+        if (questions.includes(q.id)) {
+          q.querySelector('.hub-question-bubble').style.background = '#FF6C0C';
+        } else {
+          q.querySelector('.hub-question-bubble').style.opacity = '0.3';
+        }
+      });
+    });
+
+    person.addEventListener('mouseleave', () => {
+      document.querySelectorAll('.hub-line').forEach(line => {
+        line.style.stroke = '';
+        line.style.strokeWidth = '';
+      });
+      document.querySelectorAll('.hub-question').forEach(q => {
+        q.querySelector('.hub-question-bubble').style.background = '';
+        q.querySelector('.hub-question-bubble').style.opacity = '';
+      });
+    });
+  });
+
+  // Draw on load and resize
+  drawLines();
+  window.addEventListener('resize', drawLines);
+})();
+</script>
+
+</body>
+</html>
