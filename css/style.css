@@ -273,6 +273,10 @@ img {
   margin-right: 2rem;
 }
 
+.hero-text .hero-links-media a {
+  color: var(--deep-teal);
+}
+
 /* ============================================================
    Home Page — Sections
    ============================================================ */
