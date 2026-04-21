@@ -102,7 +102,7 @@ def main():
     member_lookup = build_member_lookup(members)
 
     # Parse publication bib files
-    pub_dir = os.path.join(script_dir, '..', 'mywebsite', 'pubs')
+    pub_dir = os.path.join(script_dir, 'pubs')
     all_entries = {}
     for bibfile in ['minchew_journals.bib', 'minchew_general.bib']:
         path = os.path.join(pub_dir, bibfile)

@@ -374,15 +374,15 @@ def main():
 
     # Determine paths relative to this script
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    bib_dir = args.bib_dir or os.path.join(script_dir, '..', 'mywebsite', 'pubs')
+    bib_dir = args.bib_dir or os.path.join(script_dir, 'pubs')
     output = args.output or os.path.join(script_dir, 'publications.html')
 
     # Find CV file
     cv_path = args.cv
     if not cv_path:
         for candidate in [
-            os.path.join(script_dir, '..', 'mywebsite', 'cv', 'cv_caltech.tex'),
-            os.path.join(script_dir, '..', 'mywebsite', 'cv', 'cv.tex'),
+            os.path.join(script_dir, 'cv', 'cv_caltech.tex'),
+            os.path.join(script_dir, 'cv', 'cv.tex'),
         ]:
             if os.path.exists(candidate):
                 cv_path = candidate

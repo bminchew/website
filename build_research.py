@@ -251,7 +251,7 @@ def format_pub_item(entry, site_dir):
 
 
 def main():
-    bib_dir = os.path.join(script_dir, '..', 'mywebsite', 'pubs')
+    bib_dir = os.path.join(script_dir, 'pubs')
     journal_bib = os.path.join(bib_dir, 'minchew_journals.bib')
     general_bib = os.path.join(bib_dir, 'minchew_general.bib')
 

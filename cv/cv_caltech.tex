@@ -1,0 +1,518 @@
+\documentclass[11pt, oneside]{article}
+\usepackage[top=0.9in,right=1in,left=1in,bottom=1.2in]{geometry}
+\geometry{letterpaper}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+\usepackage{array}
+\usepackage{paralist}
+\usepackage{afterpage}
+\usepackage{longtable}
+\usepackage{etoolbox}
+\usepackage{xcolor}
+\usepackage{fontspec}
+
+% ============================================================
+% Caltech Identity Colors
+% ============================================================
+\definecolor{CaltechOrange}{HTML}{FF6C0C}
+\definecolor{DeepTeal}{HTML}{003B4C}
+\definecolor{CoolGray}{HTML}{76777B}
+\definecolor{LightGray}{HTML}{C8C8C8}
+
+% ============================================================
+% Fonts -- Caltech identity: Helvetica Neue (sans), serif body
+% ============================================================
+\setmainfont{Georgia}
+\setsansfont{Helvetica Neue}[
+  BoldFont = {Helvetica Neue Bold},
+  ItalicFont = {Helvetica Neue Italic},
+]
+
+% ============================================================
+% Section formatting with Caltech colors
+% ============================================================
+\newcommand{\cvsection}[1]{%
+  \vspace{4mm}%
+  \noindent{\large\sffamily\bfseries\color{DeepTeal}#1}%
+  \vspace{1mm}%
+  \par\noindent{\color{CaltechOrange}\rule{\textwidth}{0.8pt}}%
+  \vspace{2mm}%
+}
+
+\newcommand{\cvsubsection}[1]{%
+  \vspace{2mm}%
+  \noindent{\sffamily\color{DeepTeal}#1}%
+  \vspace{2mm}\par%
+}
+
+% ============================================================
+% Header / Footer
+% ============================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancypagestyle{first}{
+  \setlength{\headheight}{0.7in}
+  \setlength{\headwidth}{\textwidth}
+  \fancyhead{}
+  \fancyfoot{}
+  \fancyfoot[C]{\small\color{CoolGray}\thepage}
+  \fancyhead[L]{%
+    {\Large\sffamily\bfseries\color{DeepTeal}Brent Minchew} \\[2pt]
+    {\color{CoolGray}\sffamily Professor of Geophysics} \\
+    {\color{CoolGray}\sffamily Division of Geological and Planetary Sciences} \\
+    {\color{CoolGray}\sffamily California Institute of Technology}
+  }
+  \fancyhead[R]{%
+    {\color{CoolGray}\sffamily bminchew@caltech.edu} \\
+    {\color{CoolGray}\sffamily 1200 E. California Blvd.} \\
+    {\color{CoolGray}\sffamily Pasadena, CA 91125}
+  }
+}
+
+\fancypagestyle{others}{
+  \setlength{\headheight}{0.25in}
+  \setlength{\headwidth}{\textwidth}
+  \fancyhead{}
+  \fancyfoot{}
+  \fancyfoot[C]{\small\color{CoolGray}\thepage}
+  \fancyhead[L]{\sffamily\color{DeepTeal}Brent Minchew}
+  \fancyhead[R]{\sffamily\itshape\color{CoolGray}Curriculum Vitae}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\headrule}{\hbox to\headwidth{\color{LightGray}\leaders\hrule height \headrulewidth\hfill}}
+}
+
+% ============================================================
+% Bibliography setup (unchanged logic)
+% ============================================================
+\usepackage[backend=bibtex,style=numeric,sorting=none,doi=true,isbn=false,url=false,maxbibnames=99,maxcitenames=99,defernumbers=false]{biblatex}
+\AtDataInput{%
+  \csnumgdef{entrycount:\therefsection}{%
+    \csuse{entrycount:\therefsection}+1}}
+
+\DeclareNameAlias{labelname}{first-last}
+\DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+\newrobustcmd*{\mkbibdesc}[1]{%
+  \number\numexpr\csuse{entrycount:\therefsection}+1-#1\relax}
+\settowidth{\labelnumberwidth}{888}
+\DeclareFieldFormat{labelnumberwidth}{#1.}
+
+\addbibresource[label=journalbib]{../pubs/noedit_minchew_journals.bib}
+\addbibresource[label=nonrefbib]{../pubs/minchew_nonrev.bib}
+\addbibresource[label=invitedbib]{../pubs/minchew_invited.bib}
+\addbibresource[label=presentbib]{../pubs/minchew_conferences.bib}
+\addbibresource[label=generalbib]{../pubs/minchew_general.bib}
+
+\defbibenvironment{nolabelbib}
+  {\list
+     {}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{-\leftmargin}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\item}
+
+% ============================================================
+% Custom environments
+% ============================================================
+\newenvironment{changemargin}[2]{%
+  \list{}{\rightmargin#2\leftmargin#1
+  \parsep=0pt\topsep=0pt\partopsep=0pt}
+  \item[]}
+  {\endlist}
+
+\newenvironment{indentmore}{\begin{changemargin}{4mm}{0cm}}{\end{changemargin}}
+\newenvironment{indenttabular}{\begin{changemargin}{2mm}{0cm}}{\end{changemargin}}
+\renewcommand{\labelitemi}{$-$}
+
+\newcounter{daggerfootnote}
+\newcommand*{\daggerfootnote}[1]{%
+    \setcounter{daggerfootnote}{\value{footnote}}%
+    \renewcommand*{\thefootnote}{\fnsymbol{footnote}}%
+    \footnote[2]{#1}%
+    \setcounter{footnote}{\value{daggerfootnote}}%
+    \renewcommand*{\thefootnote}{\arabic{footnote}}%
+}
+
+\renewbibmacro*{in:}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\pagestyle{others}
+\thispagestyle{first}
+
+\vspace{-2mm}
+\begin{center}
+  \noindent{\color{CaltechOrange}\rule{0.4\textwidth}{1.2pt}}\\[3pt]
+  {\Large\sffamily\bfseries\color{DeepTeal}\textit{Curriculum Vitae}}\\[2pt]
+  \noindent{\color{CaltechOrange}\rule{0.4\textwidth}{1.2pt}}
+\end{center}
+
+\vspace{2mm}
+
+% ============================================================
+\cvsection{Bio}
+% ============================================================
+\begin{indentmore}
+I study how glaciers and ice sheets respond to climate change, with emphasis on the fundamental mechanisms that govern rates of sea-level rise in my daughter's lifetime. My research leverages satellite remote sensing, mathematical theory, and computational models to study the flow, deformation, and fracture of glacier ice across scales from atomic to continental and seconds to centuries. My work allows me to see nature at its most elegant, both fragile and resilient, stately and responsive.
+\end{indentmore}
+
+% ============================================================
+\cvsection{Education}
+% ============================================================
+\begin{indenttabular} \vspace{1mm}
+\begin{tabular}{l l}
+2016 & Ph.D. Geophysics, California Institute of Technology \\
+2010 & M.S. Aerospace Engineering, University of Texas at Austin \\
+2008 & B.S. Aerospace Engineering, University of Texas at Austin \\
+\end{tabular}
+\end{indenttabular}
+
+% ============================================================
+\cvsection{Academic Positions}
+% ============================================================
+\begin{indenttabular} \vspace{1mm}
+\begin{tabular}{l p{13.5cm}}
+    2025--  & Professor of Geophysics, California Institute of Technology \\
+    2024--2025 & Chair of the Program in Geophysics, Massachusetts Institute of Technology \\
+    2024--2025 & Associate Professor (with tenure), Massachusetts Institute of Technology \\
+    2023--2024 & Associate Professor (without tenure), Massachusetts Institute of Technology \\
+    2018--2023 & Assistant Professor, Massachusetts Institute of Technology \\
+    2016--2018 & NSF Postdoctoral Fellow, British Antarctic Survey \\
+    2010--2015 & Graduate Research and Teaching Assistant, California Institute of Technology \\
+    2009 \& 2010 & Graduate Research Fellow, NASA Jet Propulsion Laboratory \\
+    2006--2010 & Research and Teaching Assistant, University of Texas at Austin \\
+\end{tabular}
+\end{indenttabular}
+
+% ============================================================
+\cvsection{Nonacademic Positions}
+% ============================================================
+\begin{indenttabular} \vspace{1mm}
+\begin{tabular}{l p{13.5cm}}
+2024-- & Co-Founder and Chief Scientist, Ar$\hat{\mathrm{e}}$te Glacier Initiative \\
+1996--2004 & Staff Sergeant, United States Marine Corps
+\end{tabular}
+\end{indenttabular}
+
+% ============================================================
+\cvsection{Select Awards and Honors}
+% ============================================================
+\begin{indenttabular} \vspace{1mm}
+\begin{tabular}{l l}
+2022 & Class of 1948 Career Development Professorship, MIT \\
+2019 & Cecil and Ida Green Career Development Chair, MIT \\
+2014 & NSF Earth Sciences Postdoctoral Fellowship \\
+2013--2015 & ARCS and Albert Parvin Foundation Fellowship \\
+2012 & IEEE Transactions on Geoscience and Remote Sensing Editor's Choice Award \\
+2011--2014 & NASA Earth and Space Sciences Fellowship \\
+2011--2013 & ARCS Foundation Fellowship \\
+\end{tabular}
+\end{indenttabular}
+
+% ============================================================
+\cvsection{Publications and Presentations}
+% ============================================================
+\vspace{1mm}
+\begin{indentmore}
+\begingroup
+\renewcommand{\section}[2]{}%
+
+\cvsubsection{Scholarly articles} (45 in total; * indicates students and $^\star$ postdocs and other group members) % ## write number pubs here ##
+\begin{refsection}[journalbib]
+%%% begin pub count (this needs to be tight around citation brackets, no whitespace)
+\nocite{meyer2025b,martin2025,elgart2025,meyer2025a,narayanan2025,wells-moran2023, ovienmhada2024, ranganathan2022c,clerc2021,sun2023,ranganathan2022a,riel2022,zhong2022,ultee2021,millstein2022,ranganathan2021a,riel2021a,guerin2021,shah2020,hunter2020,riel2020a,ranganathan2020,ultee2020,minchew2020a,minchew2020b,clerc2019,minchew2019a,meyer2018b,meyer2018,minchew2018,minchew2018b,angelliaume2018,robel2017,milillo2016,angelliaume2016,minchew2016b,minchew2016a,milillo2015,collins2015,minchew2015a,scheingross2013,minchew2012b,minchew2012a,tsai2012a,jones_dwh_agu2011}
+%%% end pub count (this needs to be tight around citation brackets, no whitespace)
+  \printbibliography[title={}]
+\end{refsection}
+
+\vspace{3mm}
+
+\cvsubsection{Other publications}
+\begin{refsection}[generalbib]\nocite{guardian2026,minchew2024}
+  \printbibliography[title={}]
+\end{refsection}
+
+\vspace{3mm}
+
+\cvsubsection{Working manuscripts and preprints} {\small\color{CoolGray}(Group members and advisees: * indicates graduate students, ** undergraduates, and $^\star$ postdocs and research scientists)}
+\begin{refsection}[journalbib]
+\nocite{elgart2026,wells-moran2026}
+ \printbibliography[title={}]
+\end{refsection}
+
+\vspace{3mm}
+
+\cvsubsection{Invited presentations} {\small\color{CoolGray}(past 5 years only)}
+\begin{refsection}[invitedbib]
+\nocite{penn2026,ucla2026,caltechgeoclub2025,baco2025,ucsb2025,mitevdt2025,whoi2025,lamont2025,agu2024,stanford2023_2,caltech2023,chicago2023,whoi2023,stanford2023,brown2023,penn2023,ucsb2023,caltech2022b,tufts2022,mitportugal2022,nisar2022,eureka2022,caltech_seismolab2022,lowellobs2022}
+\printbibliography[env=nolabelbib,title={Other Publications}]
+\end{refsection}
+
+\endgroup
+\end{indentmore}
+
+% ============================================================
+\cvsection{Grants}
+% ============================================================
+\vspace{-2mm}
+\begin{longtable}[h]{l p{14cm}}
+2024-- 	& PI -- Grantham Foundation: Reducing the risk of sea-level rise by deliberately slowing glaciers in Antarctica: First steps. \\
+2021--          & PI -- John W. Jarve (1978) Seed Fund: Improving projections of sea-level rise by (deep) learning glacier dynamics from data. With Bryan Riel (MIT) \\
+2021         & PI -- MIT Climate Grand Challenges: Ice Sheet Stability and Rapid Sea-Level Rise: Exploring Risk, Impact, and Mitigation Strategies \\
+2021         & Researcher -- MIT Climate Grand Challenges: Stratospheric Airborne Climate Observatory System to Initiate Revolution In Climate Risk Forecasting. With PI John Hansman (MIT) \\
+2021--2022 & Researcher -- National Geographic Society: AI for Glacial Lake Outburst Floods Hazard Potential Assessment in Chitral, Pakistan (AI4GLOF). With PI Muhammad Adnan Siddique (Information Technology University, Lahore, Pakistan) \\
+2020--2021 & PI -- JPL Strategic University Research Partnership: Ice sheet mechanical properties as revealed from time-varying surface velocity fields. Award number 1657974. \\
+2020--2022 & PI -- NEC Corporation Fund for Research in Computers and Communications: Quantifying the Evolution of Stress Fields in Antarctic Ice Shelves by Fusing Data from Multiple Remote Sensing Platforms, Instruments, and Techniques. \\
+2020--2023 & PI -- NSFGEO-NERC: Collaborative Research: A new mechanistic framework for modeling rift processes in Antarctic ice shelves validated through improved strain-rate and seismic observations. Award number 1853918 \\
+2020--2021 & PI -- Microsoft AI for Earth: Theory-guided discovery of glacier dynamics using deep learning. With Bryan Riel (MIT) \\
+2020--2021 & PI -- MIT-Germany - FAU Seed Fund: Rift Formation in Antarctic Ice Shelves: Constraining the Mechanical Properties of Glacier Ice Using Time-Dependent, High-Resolution Strain-Rate Fields. With Matthias Braun (FAU) \\
+2019--2020 & PI -- Earl A Killian III (1978) and Waidy Lee Fund: Improving projections of sea-level rise by (deep) learning glacier dynamics from data. With Bryan Riel (MIT) \\
+2019--2020 & Co-I -- Microsoft AI for Earth: Theory-guided discovery of glacier dynamics using deep learning. With Bryan Riel (MIT) and Tobias Bischoff (Microsoft) \\
+2018--2023 & Researcher -- NSF-NERC: Processes, drivers, predictions: Modeling the history and evolution of Thwaites Glacier (PROPHET). Award number 1739031\\
+2016--2018 & PI -- Spatiotemporal characteristics of basal resistance to ice flow in the West Antarctic Ice Sheet from satellite observations and numerical modeling. NSF Earth Sciences Postdoctoral Fellowship award 1452587 \\
+2013--2015 & Research assistant -- Subglacial mechanics using repeat-pass InSAR measurements and numerical models of temperate ice caps in Iceland. NASA Cryospheric Science award NNX14AH80G, with PI Mark Simons (Caltech) \\
+2011--2014 & PI -- Investigating the mechanics of subglacial till using airborne radar interferometry and numerical ice flow models. NASA Earth and Space Science Fellowship \\
+2011--2012 & Research assistant -- Temperate glacier studies with UAVSAR. NASA Cryospheric Science, with PI Mark Simons (Caltech)
+\end{longtable}
+\vspace{-5mm}
+
+% ============================================================
+\cvsection{Mentorship}
+% ============================================================
+\vspace{1mm}
+\begin{indentmore}
+\begingroup
+\renewcommand{\section}[2]{}%
+
+
+
+
+
+
+\cvsubsection{Postdoctoral researchers}
+\begin{longtable}[h]{l p{13cm}}
+2026-- & Natasha Morgan-Witts (U. Wisconsin, Madison PhD `26), starting July 2026 \\
+2026-- & George Lu (Columbia PhD `26), starting October 2026 \\
+2025-- & Evan Kramer (MIT PhD `25), Caltech Seismo Lab Director's Fellow \\
+2019--2022 & Bryan Riel (Caltech PhD `17); now faculty at Zhejiang University \\
+2018--2021 & Elizabeth (Lizz) Ultee (U. Michigan PhD `18); now research scientist at NASA Goddard Space Flight Center and Morgan State University
+\end{longtable}
+
+\vspace{-3mm}
+\cvsubsection{Graduate students, as a primary advisor}
+\begin{longtable}[h]{l p{13cm}}
+2024-- & Thatcher Chamberlin (PhD, PAOC) \\
+2023-- & Max Filter, MIT EAPS (PhD, Geophysics) \\
+2023--2025 & Sarah Wells-Moran (MIT MS `25), now PhD student at University of Chicago \\
+2022--2024 & Ufuoma Ovienmhada (MIT PhD `24) \\
+2021--2023 & Neosha Narayanan (MIT MS `23), now PhD student at Georgia Tech \\
+2019--2025 & Faye Hendley Elgart (MIT PhD `25), now postdoc at Laboratoire de Glaciologie at the Universit\'{e} libre de Bruxelles \\
+2019-- & Justin Linick, MIT EAPS (PhD, Geophysics) \\
+2018--2023 & Joanna Millstein (MIT-WHOI JP PhD `23), now postdoc at Colorado School of Mines \\
+2018--2022 & Fiona Clerc (MIT-WHOI JP PhD `22), now faculty at Stony Brook University \\
+2018--2022 & Meghana Ranganathan (MIT PhD `22), now faculty at University of Chicago \\
+2018--2019 & Brindha Kanniah (MIT MS `19)
+\end{longtable}
+
+\vspace{-3mm}
+\cvsubsection{Graduate students, as a secondary or project advisor}
+\begin{longtable}[h]{l p{13cm}}
+2025-- & PhD project advisor: Jackson Fellows, Caltech Seismo Lab \\
+2025-- & PhD project advisor: Mma Ikwut-Ukwa, Caltech GPS (Planetary) \\
+2025-- & PhD project advisor: Ben Reynolds, Caltech GPS (Geology) \\
+2025-- & PhD project advisor: Elena Dworak, Caltech ESE \\
+2025-- & PhD project advisor: Yi Li, Caltech Seismo Lab \\
+2024-- & PhD project advisor: Caroline Needell, MIT-WHOI Joint Program \\
+2023-- & PhD project advisor: Alex Miller, MIT AeroAstro \\
+2022-- & PhD project advisor: Caroline Mouchon, MIT EAPS (Geophysics) \\
+2022--2024 & PhD project advisor: Annick Dewald (MIT PhD `24, AeroAstro), now founding faculty at Greenway Institute \\
+2021--2023 & PhD project advisor: Grace O'Neil, MIT EAPS (PAOC) \\
+2021--2023 & PhD project advisor: Yudong Sun (MIT PhD `25), now postdoc at Stanford University \\
+2021--2023 & PhD project advisor: Mila Lubeck, MIT EAPS (Geophysics) \\
+2019--2020 & MS project co-advisor: Pierce Hunter (UO MS `20) \\
+2019--2024 & PhD project advisor: Erik Tamre (MIT PhD `24), now postdoc at Dartmouth College \\
+2018--2022 & PhD project advisor: Kasturi Shah (MIT PhD `22), now McDonnell Foundation Research Fellow at University of Cambridge \\
+2018--2019 & PhD project advisor: Julia Wilcots (MIT PhD `22), now faculty at University of Minnesota, Twin Cities
+\end{longtable}
+
+\vspace{-3mm}
+\cvsubsection{Undergraduate students}\\
+\phantom{nt}{\small\color{CoolGray}(UROP = MIT Undergrad Research Opportunities Program; MSRP = MIT Summer Research Program)}
+\vspace{-5mm}
+\begin{longtable}[h]{l p{13cm}}
+2024\hphantom{--2024} & UROP advisor: Justin Cole, MIT \\
+2023--2025 & UROP advisor: Rina Cao, MIT \\
+2023\hphantom{--2023} & UROP advisor: Kyle Guerre, MIT \\
+2023\hphantom{--2023} & UROP advisor: Kristine Bridges, MIT \\
+2021\hphantom{--2021} & MSRP advisor: Florencia Corbo-Ferreira, U. of Florida \\
+2021\hphantom{--2021} & UROP advisor: Mateo Pisinger, MIT \\
+2021--2022 & UROP advisor: Ryan Conti, Math + Comp Sci, MIT \\
+2021\hphantom{--2021} & UROP advisor: Jon Rosario, Math + Comp Sci, MIT \\
+2020\hphantom{--2020} & UROP advisor: Neosha Narayanan, Mat. Sci., MIT \\
+2020--2023 & UROP advisor: Sarah Wells-Moran, Wellesley College \\
+2020--2023 & Project advisor: Max Filter, Computer Science, U. of Virginia \\
+2020--2021 & UROP advisor: Jack-William Barotta, Math, MIT \\
+2020\hphantom{--2020} & UROP advisor: Gabriela Alvarez, Mech. Eng., MIT \\
+2020\hphantom{--2020} & UROP advisor: Jordan Ambrosio, Mech. Eng., MIT \\
+2020\hphantom{--2020} & UROP advisor: Stephanie Baez, Civil Eng., MIT \\
+2020\hphantom{--2020} & UROP advisor: Anna Chau, EE + Comp. Sci, MIT \\
+2020\hphantom{--2020} & UROP advisor: Adriana Flores, AeroAstro, MIT \\
+2020\hphantom{--2020} & UROP advisor: Meriah Gannon, Env. Eng., MIT \\
+2020\hphantom{--2020} & UROP advisor: Adelynn Paik, Sys. Eng., MIT \\
+2020\hphantom{--2020} & UROP advisor: Kristopher Vu, Mech. Eng. + Comp. Sci, MIT \\
+2020\hphantom{--2020} & UROP advisor: Joyce Yoon, Mech. Eng., MIT \\
+2015\hphantom{--2015} & Project advisor: Benjamin Lauer, Universit\'{e} de Lorraine \\
+2015\hphantom{--2015} & Project advisor: Christine Rains, DEVELOP-JPL \\
+2015\hphantom{--2015} & Project advisor: Jerry Heo, DEVELOP-JPL \\
+2015\hphantom{--2015} & Project advisor: Erika Higa, DEVELOP-JPL \\
+2013\hphantom{--2013} & Project advisor: Sandia Akhtar, Caltech
+\end{longtable}
+
+\endgroup
+\end{indentmore}
+\vspace{-5mm}
+
+% ============================================================
+\cvsection{Thesis Committee Membership}
+% ============================================================
+{\small\color{CoolGray}(in addition to mentorship)}
+\vspace{1mm}
+\begin{indentmore}
+\begingroup
+\renewcommand{\section}[2]{}%
+
+\cvsubsection{Internal thesis committees}
+\begin{longtable}[h]{l p{13cm}}
+	2023-- & Riley Thomas (PhD, MIT-WHOI JP) \\
+	2023-- & Maia Cohen (PhD, MIT-WHOI JP) \\
+	2023-- & Caroline Needell (PhD, MIT-WHOI JP) \\
+	2023--2025 & Evan Kramer (PhD, MIT AeroAstro) \\
+	2023-- & Kristen Ammons (PhD, MIT AeroAstro) \\
+	2022   & Mathilde Wimez (MS 2022, MIT EAPS) \\
+	2021--2023 & Ana Glidden (PhD, MIT EAPS) \\
+	2021--2025 & Alan Gaul (PhD, MIT-WHOI JP)  \\
+	2021--2023 & Cadence Payne (PhD, MIT AeroAstro) \\
+	2020   & Taylor Safrit (MS 2020, MIT EAPS) \\
+	2020   & Anuar Togaibekov (MS 2020, MIT EAPS) \\
+	2019   & Dylan Cohen (MS 2019, MIT EAPS) \\
+	2018--2020 & Jeffery Mei (PhD, MIT-WHOI JP; defended Aug 2020) \\
+	2018--2021 & Eric Stansifer (PhD, MIT EAPS; defended Oct 2021) \\
+\end{longtable}
+
+\cvsubsection{External thesis committees}
+\begin{longtable}[h]{l p{13cm}}
+	2022         & Aaron Stubblefield (PhD 2022, Columbia University) \\
+	2021         & Cornelius Quigley (PhD 2021, University of Tromso) \\
+	2019         & Martine Espeseth (PhD 2019, University of Tromso) \\
+	2018--2021 & Juan Pinales (MS 2021, University of Miami) \\
+	2018--2023 & Stephanie Olinger (PhD 2023, Harvard) \\
+\end{longtable}
+
+\endgroup
+\end{indentmore}
+\vspace{-5mm}
+
+% ============================================================
+\cvsection{Teaching}
+% ============================================================
+\vspace{-2mm}
+\begin{longtable}[h]{l l p{10.5cm}}
+2026 Spring & Caltech Ge193 & Glacier Dynamics \\
+2025 Spring & MIT 12.421/12.621 & Physical Principles of Remote Sensing (undergraduate and graduate) \\
+2024 Spring & MIT 12.203/12.503 & Mechanics of Earth (undergraduate and graduate) \\
+2024 Spring & MIT 12.512 & Field Geophysics Analysis (graduate) \\
+2024 IAP & MIT 12.511 & Geophysics Field Camp (graduate) \\
+2023 Fall & MIT 12.202/12.502 & Flow, Deformation, and Fracture in Earth and Other Terrestrial Bodies (undergraduate and graduate) \\
+2023 Fall & MIT 12.214/12.507 & Essentials of Applied Geophysics (undergraduate and graduate) \\
+2022 Fall & MIT 12.421/12.621 & Physical Principles of Remote Sensing (undergraduate and graduate) \\
+2022 Spring & MIT 12.203/12.503 & Mechanics of Earth (undergraduate and graduate) \\
+2022 IAP & MIT 12.511 & Geophysics Field Camp (graduate) \\
+2021 Fall & MIT 12.S595 & Geophysics Field Course (graduate) \\
+2021 Fall & MIT 12.202/12.502 & Flow, Deformation, and Fracture in Earth and Other Terrestrial Bodies (undergraduate and graduate) \\
+2021 Spring & MIT 12.S595 & Antarctic Ice Sheet in a Changing Climate (graduate) \\
+2020 Fall & MIT 12.421/12.621 & Physical Principles of Remote Sensing (undergraduate and graduate) \\
+2020 Spring & MIT 12.203/12.503 & Mechanics of Earth (undergraduate and graduate) \\
+2019 Fall & MIT 12.202/12.502 & Flow, Deformation, and Fracture in Earth and Other Terrestrial Bodies (undergraduate and graduate) \\
+2019 Spring & MIT 12.005/12.520 & Applications of Continuum Mechanics to Earth, Atmospheric, and Planetary Sciences (undergraduate) / Geodynamics (graduate) \\
+2018 Fall & MIT 12.421/12.621 & Physical Principles of Remote Sensing (undergraduate and graduate)
+\end{longtable}
+\vspace{-5mm}
+
+% ============================================================
+\cvsection{Academic Service}
+% ============================================================
+{\small\color{CoolGray}(internal and external)}
+\vspace{-2mm}
+\begin{longtable}[h]{l l p{10.5cm}}
+2024--2025 & MIT EAPS & Chair, Program in Geophysics \\
+2024   & MIT EAPS & Department Head search committee \\
+2024   & MIT EAPS & Graduate admissions committee \\
+2023   & MIT EAPS & Renovation committee (chair) \\
+2023--2025 & MIT-WHOI & MIT-WHOI Joint Program Committee \\
+2022--2025 & MIT & Warrior Scholar Project \\
+2022--2023  & MIT EAPS & Department website committee \\
+2021    & UNAVCO & Guest lecturer for InSAR/ISCE workshop \\
+2021--2024 & UNAVCO & WInSAR Executive Committee member \\
+2021--2022 & MIT EAPS & Department Lecture Series committee \\
+2020--2024 & MIT & Common Ground for Computing Education Committee \\
+2020 & NASA & Surface Deformation and Change -- Cryosphere Working Group \\
+2019--2025 & AGU Journals & Associate Editor, Journal of Geophysical Research: Earth Surface \\
+2019--2020 & MIT EAPS  & Task Force 2023 committee member \\
+2018--2025 & MIT EAPS & Communications committee member \\
+2018--2021 & Boston Museum of Science & External advisory committee member \\
+2018--2019 & MIT EAPS & Faculty search committee member
+\end{longtable}
+\vspace{-5mm}
+
+% ============================================================
+\cvsection{Professional Activities}
+% ============================================================
+\begin{indentmore}
+\begin{compactitem}
+\item[\textit{Chief Scientist and Co-Founder}:]{Ar$\hat{\mathrm{e}}$te Glacier Initiative (2024--)}
+\item[\textit{Associate Editor}:]{Journal of Geophysical Research: Earth Surface (2019--2025)}
+\item[\textit{Scientific Editor}:]{Annals of Glaciology (2017--2018)}
+\item[\textit{Member}:]{ International Glaciological Society, International Association of Cryospheric Sciences, Association of Polar Early Career Scientists, American Geophysical Union, European Geosciences Union, American Association for the Advancement of Science}
+\item[\textit{Notable external committees}:]{ Boston Museum of Science advisory board member; NASA Surface Deformation and Change -- Cryosphere Working Group; UNAVCO WInSAR Executive Committee member}
+\end{compactitem}
+\end{indentmore}
+
+% ============================================================
+\cvsection{Selected Outreach Efforts}
+% ============================================================
+\begin{indentmore}
+\begin{compactitem}
+\item{Faculty Advisor, MIT Student Veterans Association}
+\item{Speaker and Lecturer, Warrior Scholar Project}
+\item{Speaker, Lowell Observatory public science event: I Heart Pluto Festival}
+\item{Military veteran advising and speaking}
+\item{MIT Museum: Teen Science Caf\'{e}}
+\item{Boston Museum of Science \emph{Pulsar} science podcast}
+\item{Gardner Pilot Academy, Allston, MA: Introducing 8th grade math students to glaciers and glaciology}
+\item{\emph{Arctic Adventure: Exploring with Technology} at the Boston Museum of Science}
+\item{NASA Climate Day presenter}
+\item{US Embassy Iceland outreach on Arctic climate}
+\item{Iridescent Learning: Teaching children about scientific concepts}
+\end{compactitem}
+\end{indentmore}
+
+% ============================================================
+\cvsection{Military Service}
+% ============================================================
+\begin{indentmore}
+\begin{compactitem}
+\item[\hspace{2mm}United States Marine Corps]
+\item[\hspace{2mm}Active duty] August 1996--February 2004
+\item[\hspace{2mm}Rank:] Staff Sergeant
+\item[\hspace{2mm}Units:] HMX-1, HMH-461, HMM-264, 26th MEU (aboard USS Iwo Jima LHD-7)
+\item[\hspace{2mm}Major campaigns:] Operation Iraqi Freedom, Combined Joint Task Force--Horn of Africa, Joint Task Force Liberia
+\end{compactitem}
+\end{indentmore}
+
+
+\end{document}

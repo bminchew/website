@@ -10,7 +10,7 @@ import sys
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    cv_path = os.path.join(script_dir, '..', 'mywebsite', 'cv', 'cv_caltech.tex')
+    cv_path = os.path.join(script_dir, 'cv', 'cv_caltech.tex')
     index_path = os.path.join(script_dir, 'index.html')
 
     # Extract bio from CV (between \cvsection{Bio} ... \end{indentmore})

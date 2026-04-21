@@ -1,2 +1,26 @@
 research_hub.html
 __pycache__/
+
+# CV build artifacts
+cv/*.aux
+cv/*.log
+cv/*.out
+cv/*.bcf
+cv/*.blg
+cv/*.bbl
+cv/*.run.xml
+cv/*-blx.*
+cv/*.dvi
+cv/*.glo
+cv/*.synctex.gz
+cv/cv_caltech.pdf
+cv/cv.pdf
+cv/texput.log
+cv/missfont.log
+cv/z_logs/
+cv/cv.tex.save
+cv/cv.tex.test
+cv/cv_caltech.tex.test
+
+# Generated bib (bold_bib.py output)
+pubs/noedit_minchew_journals.bib

@@ -206,7 +206,7 @@ def generate_mentorship_tex(members):
 
 def main():
     bib_path = os.path.join(script_dir, 'group.bib')
-    cv_path = os.path.join(script_dir, '..', 'mywebsite', 'cv', 'cv_caltech.tex')
+    cv_path = os.path.join(script_dir, 'cv', 'cv_caltech.tex')
 
     members = parse_group_bib(bib_path)
     print(f'Parsed {len(members)} members from group.bib')

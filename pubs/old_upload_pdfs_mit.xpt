@@ -1,0 +1,10 @@
+#!/usr/bin/expect -f
+
+set pass [lindex $argv 0]
+
+set timeout 30000
+
+spawn rsync -alPvz pdfs minchew@athena.dialup.mit.edu:/afs/athena.mit.edu/user/m/i/minchew/www/pubs
+expect "Password:"
+send "$pass\n"
+interact
