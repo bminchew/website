@@ -195,7 +195,7 @@ img {
 .hero-inner {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 1.5rem 2rem 2.5rem;
+  padding: 0 2rem 2.5rem;
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
