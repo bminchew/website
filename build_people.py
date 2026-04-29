@@ -45,56 +45,32 @@ def build_title_current(m):
     return ''
 
 
-def build_title_alumni(m):
-    """Build display title for an alumni member."""
-    parts = []
-
-    # Degree and graduation info
-    grad_inst = m.get('grad_inst', '')
-    degree = m.get('degree', '')
-    grad_year = m.get('grad_year', '')
+def get_alumni_affiliation(m):
+    """Get the university affiliation while in the group."""
+    entry_type = m.get('_type', '')
     dept = m.get('department', '')
-    start = m.get('start', '')
-    end = m.get('end', '')
+    grad_inst = m.get('grad_inst', '')
 
-    if grad_inst and degree and grad_year:
-        parts.append(f"{degree} 20{grad_year}, {grad_inst}")
-    elif degree and end:
-        inst = dept.split('(')[0].strip().rstrip(',') if dept else ''
-        parts.append(f"{degree} {end}, {inst}" if inst else f"{degree} {end}")
-    elif dept:
-        parts.append(f"{dept}, {start}&ndash;{end}")
-    else:
-        parts.append(f"{start}&ndash;{end}")
-
-    title = ', '.join(p for p in parts if p)
-
-    # Current position
-    now = m.get('now', '')
-    if now:
-        title += f" &rarr; {clean_latex_for_html(now)}"
-
-    return title
+    if entry_type in ('postdoc', 'researchscientist'):
+        # Postdocs/research scientists were at the PI's institution
+        end = int(m.get('end', m.get('start', '2025')))
+        return 'Caltech' if end >= 2025 else 'MIT'
+    elif entry_type in ('gradprimary', 'gradproject'):
+        # Grad students: use grad_inst if available, else extract from department
+        if grad_inst:
+            return clean_latex_for_html(grad_inst)
+        elif dept:
+            return clean_latex_for_html(dept)
+    elif entry_type == 'undergrad':
+        if dept:
+            return clean_latex_for_html(dept)
+    return ''
 
 
 def render_person(m, show_degree_in_name=False):
     """Render a person entry as HTML."""
     photo = find_photo(m)
     name = clean_latex_for_html(m.get('display_name', m['name']))
-
-    # For postdocs with grad info, show inline
-    name_suffix = ''
-    if show_degree_in_name and m.get('grad_inst') and m.get('degree'):
-        grad_year = m.get('grad_year', '')
-        if grad_year:
-            name_suffix = f" ({m['degree']}, {m['grad_inst']})"
-        else:
-            name_suffix = f" ({m['degree']}, {m['grad_inst']})"
-
-    if m['is_current']:
-        title = build_title_current(m)
-    else:
-        title = build_title_alumni(m)
 
     html = '    <div class="person">\n'
     html += '      <div class="person-photo">\n'
@@ -104,9 +80,75 @@ def render_person(m, show_degree_in_name=False):
         html += '        <div class="placeholder">Photo</div>\n'
     html += '      </div>\n'
     html += '      <div class="person-info">\n'
-    html += f'        <h3>{name}{name_suffix}</h3>\n'
-    if title:
-        html += f'        <div class="person-title">{title}</div>\n'
+
+    entry_type = m.get('_type', '')
+
+    if m['is_current'] and entry_type in ('postdoc', 'researchscientist'):
+        html += f'        <h3>{name}</h3>\n'
+        title = build_title_current(m)
+        if title:
+            html += f'        <div class="person-title">{title}</div>\n'
+        degree = m.get('degree', '')
+        grad_inst = m.get('grad_inst', '')
+        grad_year = m.get('grad_year', '')
+        if degree and grad_inst:
+            detail = f'{degree} {clean_latex_for_html(grad_inst)}'
+            if grad_year:
+                detail += f', 20{grad_year}'
+            html += f'        <div class="person-detail">{detail}</div>\n'
+    elif m['is_current']:
+        html += f'        <h3>{name}</h3>\n'
+        title = build_title_current(m)
+        if title:
+            html += f'        <div class="person-title">{title}</div>\n'
+    else:
+        # Alumni: line 1 = name (affiliation), line 2 = dates, line 3 = degree
+        affiliation = get_alumni_affiliation(m)
+        if affiliation:
+            html += f'        <h3>{name} ({affiliation})</h3>\n'
+        else:
+            html += f'        <h3>{name}</h3>\n'
+
+        start = m.get('start', '')
+        end = m.get('end', '')
+        entry_type = m.get('_type', '')
+        degree = m.get('degree', '')
+
+        # Determine position title
+        if entry_type == 'postdoc':
+            position = 'Postdoctoral Scholar'
+        elif entry_type == 'researchscientist':
+            position = 'Research Scientist'
+        elif entry_type in ('gradprimary', 'gradproject'):
+            if degree == 'PhD':
+                position = 'PhD Student'
+            elif degree == 'MS':
+                position = 'MS Student'
+            else:
+                position = 'Graduate Student'
+        elif entry_type == 'undergrad':
+            position = 'Undergraduate Researcher'
+        else:
+            position = ''
+
+        if start and end:
+            if position:
+                html += f'        <div class="person-title">{position}, {start}&ndash;{end}</div>\n'
+            else:
+                html += f'        <div class="person-title">{start}&ndash;{end}</div>\n'
+
+        grad_year = m.get('grad_year', '')
+        grad_inst = m.get('grad_inst', '')
+        if degree and grad_year:
+            if entry_type in ('postdoc', 'researchscientist') and grad_inst:
+                html += f'        <div class="person-detail">{degree} {clean_latex_for_html(grad_inst)}, 20{grad_year}</div>\n'
+            else:
+                html += f'        <div class="person-detail">{degree} 20{grad_year}</div>\n'
+
+        now = m.get('now', '')
+        if now:
+            html += f'        <div class="person-detail">Now: {clean_latex_for_html(now)}</div>\n'
+
     html += '      </div>\n'
     html += '    </div>\n'
     return html
@@ -120,11 +162,12 @@ def main():
 
     # Categorize
     postdocs = get_by_type(members, 'postdoc')
+    research_scientists = get_by_type(members, 'researchscientist')
     primary = get_by_type(members, 'gradprimary')
     project = get_by_type(members, 'gradproject')
 
     current_postdocs = sorted(
-        [m for m in postdocs if m['is_current']],
+        [m for m in postdocs + research_scientists if m['is_current']],
         key=lambda m: int(m['start'])
     )
     current_students = sorted(
@@ -132,7 +175,7 @@ def main():
         key=lambda m: m['display_name'].split()[-1]
     )
     alumni = sorted(
-        [m for m in postdocs + primary + project if not m['is_current']],
+        [m for m in postdocs + research_scientists + primary + project if not m['is_current']],
         key=lambda m: m['display_name'].split()[-1]
     )
 

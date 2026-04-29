@@ -443,6 +443,12 @@ a.research-card:hover {
   margin-bottom: 0.4rem;
 }
 
+.person-info .person-detail {
+  font-size: 0.88rem;
+  color: var(--deep-teal);
+  margin-bottom: 0.2rem;
+}
+
 .person-info .person-contact {
   font-size: 0.85rem;
   color: var(--cool-gray);
