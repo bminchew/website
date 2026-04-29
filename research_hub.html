@@ -56,14 +56,55 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: default;
+      cursor: pointer;
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      text-decoration: none;
     }
 
     .hub-question-bubble:hover {
       background: #FF6C0C;
       transform: scale(1.08);
+    }
+
+    a.hub-question-bubble {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    /* Dropdown for questions with multiple links */
+    .hub-question-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-top: 0.3rem;
+      background: #fff;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow: hidden;
+      z-index: 20;
+      min-width: 160px;
+    }
+
+    .hub-question:hover .hub-question-dropdown {
+      display: block;
+    }
+
+    .hub-question-dropdown a {
+      display: block;
+      padding: 0.5rem 0.8rem;
+      color: #003B4C;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .hub-question-dropdown a:hover {
+      background: #FF6C0C;
+      color: #fff;
     }
 
     /* People — small photo circles */
@@ -228,7 +269,7 @@
     <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">&#9776;</button>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="research_hub.html" class="active">Research</a></li>
       <li><a href="people.html">People</a></li>
       <li><a href="publications.html">Publications</a></li>
       <li><a href="software.html">Software</a></li>
@@ -250,27 +291,31 @@
     <!-- Questions — pentagon at ~28% radius from center -->
     <div class="hub-question" id="q-sliding" style="left: 50%; top: 15%; transform: translate(-50%, -50%);"
          data-people="chamberlin,dworak,filter,kramer,linick,lu,miller,morgan-witts,mouchon">
-      <div class="hub-question-bubble">What controls glacier sliding?</div>
+      <a href="research/basal-mechanics.html" class="hub-question-bubble">What controls glacier sliding?</a>
     </div>
 
     <div class="hub-question" id="q-deform" style="left: 73%; top: 35%; transform: translate(-50%, -50%);"
          data-people="chamberlin,dworak,fellows,filter,ikwut-ukwa,kramer,li,linick,lu,morgan-witts,mouchon,needell,reynolds">
-      <div class="hub-question-bubble">How does ice deform?</div>
+      <a href="research/shear-margins.html" class="hub-question-bubble">How does ice deform?</a>
     </div>
 
     <div class="hub-question" id="q-fracture" style="left: 64%; top: 62%; transform: translate(-50%, -50%);"
          data-people="fellows,filter,ikwut-ukwa,li,morgan-witts,needell,reynolds">
-      <div class="hub-question-bubble">Why does ice fracture?</div>
+      <a href="research/calving.html" class="hub-question-bubble">Why does ice fracture?</a>
     </div>
 
     <div class="hub-question" id="q-stabilize" style="left: 36%; top: 62%; transform: translate(-50%, -50%);"
          data-people="kramer,lu,miller,morgan-witts">
-      <div class="hub-question-bubble">Can we stabilize ice sheets?</div>
+      <a href="research/stabilization.html" class="hub-question-bubble">Can we stabilize ice sheets?</a>
     </div>
 
     <div class="hub-question" id="q-serve" style="left: 27%; top: 35%; transform: translate(-50%, -50%);"
          data-people="kramer,lu,miller,morgan-witts">
       <div class="hub-question-bubble" style="font-size: 0.78rem;">How else can the tools of science serve people?</div>
+      <div class="hub-question-dropdown">
+        <a href="research/stabilization.html">Ice Sheet Stabilization</a>
+        <a href="research/hazards.html">Hazard Response &amp; Mitigation</a>
+      </div>
     </div>
 
     <!-- People — outer ring, with data-methods for conic gradient borders -->
