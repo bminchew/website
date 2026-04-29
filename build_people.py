@@ -96,11 +96,19 @@ def render_person(m, show_degree_in_name=False):
             if grad_year:
                 detail += f', 20{grad_year}'
             html += f'        <div class="person-detail">{detail}</div>\n'
+        start = m.get('start', '')
+        if start:
+            html += f'        <div class="person-detail">Group member since {start}</div>\n'
     elif m['is_current']:
         html += f'        <h3>{name}</h3>\n'
         title = build_title_current(m)
-        if title:
+        start = m.get('start', '')
+        if title and start:
+            html += f'        <div class="person-title">{title}, since {start}</div>\n'
+        elif title:
             html += f'        <div class="person-title">{title}</div>\n'
+        elif start:
+            html += f'        <div class="person-title">Since {start}</div>\n'
     else:
         # Alumni: line 1 = name (affiliation), line 2 = dates, line 3 = degree
         affiliation = get_alumni_affiliation(m)
