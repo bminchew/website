@@ -263,14 +263,14 @@ def generate_html(entries, title, numbered=True, start_num=None, site_dir='.'):
         bib_key = entry.get('_key', '')
         pdf_path = os.path.join(site_dir, 'pdfs', f'{bib_key}.pdf')
         if os.path.exists(pdf_path):
-            links += f'<a href="pdfs/{bib_key}.pdf">[pdf]</a> '
+            links += f'<a href="pdfs/{bib_key}.pdf" target="_blank">[pdf]</a> '
         if doi:
             doi_clean = doi.strip()
             if not doi_clean.startswith('http'):
                 doi_url = f'https://doi.org/{doi_clean}'
             else:
                 doi_url = doi_clean
-            links += f'<a href="{doi_url}">[doi]</a> '
+            links += f'<a href="{doi_url}" target="_blank">[doi]</a> '
         url = entry.get('url', '').strip()
         if url and not doi:
             if not url.startswith('http'):
