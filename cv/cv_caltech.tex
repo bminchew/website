@@ -58,7 +58,7 @@
   \setlength{\headwidth}{\textwidth}
   \fancyhead{}
   \fancyfoot{}
-  \fancyfoot[C]{\small\color{CoolGray}\thepage}
+  \fancyfoot[C]{\raisebox{0.45in}{\small\color{CoolGray}\thepage}}
   \fancyhead[L]{%
     {\Large\sffamily\bfseries\color{DeepTeal}Brent Minchew} \\[2pt]
     {\color{CoolGray}\sffamily Professor of Geophysics} \\
@@ -144,6 +144,7 @@
 
 \pagestyle{others}
 \thispagestyle{first}
+\enlargethispage{-0.45in}
 
 \vspace{-2mm}
 \begin{center}
@@ -203,7 +204,7 @@ I study how glaciers and ice sheets respond to climate change, with emphasis on 
 \cvsection{Select Awards and Honors}
 % ============================================================
 \begin{indenttabular} \vspace{1mm}
-\begin{tabular}{l l}
+\begin{longtable}[h]{l l}
 2022 & Class of 1948 Career Development Professorship, MIT \\
 2019 & Cecil and Ida Green Career Development Chair, MIT \\
 2014 & NSF Earth Sciences Postdoctoral Fellowship \\
@@ -211,7 +212,7 @@ I study how glaciers and ice sheets respond to climate change, with emphasis on 
 2012 & IEEE Transactions on Geoscience and Remote Sensing Editor's Choice Award \\
 2011--2014 & NASA Earth and Space Sciences Fellowship \\
 2011--2013 & ARCS Foundation Fellowship \\
-\end{tabular}
+\end{longtable}
 \end{indenttabular}
 
 % ============================================================
@@ -288,6 +289,11 @@ I study how glaciers and ice sheets respond to climate change, with emphasis on 
 \begin{indentmore}
 \begingroup
 \renewcommand{\section}[2]{}%
+
+
+
+
+
 
 
 
