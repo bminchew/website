@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPS Field Sites Map &mdash; Caltech GPS 100th Anniversary</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background: #fff;
+      color: #333;
+    }
+
+    /* --- Header: matches gps.caltech.edu branding --- */
+    .site-header {
+      background: #fff;
+      border-bottom: 3px solid #FF6C0C;
+      padding: 0.8rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-brand img {
+      height: 36px;
+    }
+
+    .header-brand .divider {
+      width: 1px;
+      height: 30px;
+      background: #ccc;
+    }
+
+    .header-brand .division-name {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #555;
+      line-height: 1.3;
+    }
+
+    .header-brand .division-name strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #222;
+    }
+
+    /* --- Sub-header with page title --- */
+    .page-banner {
+      background: #f7f7f7;
+      border-bottom: 1px solid #e5e5e5;
+      padding: 1.2rem 2rem;
+      text-align: center;
+    }
+
+    .page-banner h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 0.2rem;
+    }
+
+    .page-banner p {
+      font-size: 0.88rem;
+      color: #76777B;
+    }
+
+    .page-banner .accent-bar {
+      width: 50px;
+      height: 3px;
+      background: #FF6C0C;
+      margin: 0.6rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* --- Map --- */
+    #map {
+      width: 100%;
+      height: calc(100vh - 145px);
+    }
+
+    /* --- Tooltip (hover) --- */
+    .site-tooltip {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .site-tooltip .tooltip-name {
+      font-weight: 600;
+      color: #222;
+    }
+
+    .site-tooltip .tooltip-meta {
+      color: #76777B;
+      font-size: 0.8rem;
+    }
+
+    /* --- Popup (click) --- */
+    .site-popup {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      max-width: 320px;
+    }
+
+    .site-popup h3 {
+      font-size: 1rem;
+      color: #222;
+      margin-bottom: 0.3rem;
+    }
+
+    .site-popup .popup-meta {
+      font-size: 0.82rem;
+      color: #76777B;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    .site-popup .popup-description {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 0.6rem;
+      color: #333;
+    }
+
+    .site-popup .popup-photos {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .site-popup .popup-photos img {
+      width: 90px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #ddd;
+    }
+
+    .site-popup .popup-photos img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    /* --- Lightbox overlay --- */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 4px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .lightbox .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* --- Caltech orange markers --- */
+    .caltech-marker {
+      background: #FF6C0C;
+      border: 2.5px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.35);
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-brand">
+    <img src="https://www.gps.caltech.edu/static/core/img/caltech-new-logo.png" alt="Caltech">
+    <div class="divider"></div>
+    <div class="division-name">
+      <strong>Division of Geological and Planetary Sciences</strong>
+      100th Anniversary
+    </div>
+  </div>
+</header>
+
+<div class="page-banner">
+  <h1>GPS Field Sites Around the World</h1>
+  <p>A century of discovery &mdash; mapped by our community</p>
+  <div class="accent-bar"></div>
+</div>
+
+<div id="map"></div>
+
+<!-- Lightbox for enlarged photos -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="Enlarged photo">
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// --- Mock data (simulates what would come from a Google Sheet) ---
+const mockData = [
+  {
+    name: "Zhongwen Zhan, Thatcher Chamberlin, & team",
+    affiliation: "Faculty & Students, GPS / JPL (GLASS project)",
+    siteName: "Union Glacier, Antarctica",
+    date: "2025",
+    lat: -79.76,
+    lng: -83.3,
+    description: "The GLASS team deployed 500 seismic nodes, 6 km of fiber-optic DAS cable, ground-penetrating radar, and 10 GNSS stations at Constellation Inlet to map grounding-line behavior and image ice-bed structure across tidal cycles.",
+    photos: ["photos/GLASS_Antarctica_2025_176.width-1780.format-avif.avif", "photos/GLASS_Antarctica_2025_316.width-1780.format-avif.avif", "photos/GLASS_Antarctica_2025_389.width-1780.format-avif.avif"]
+  },
+  {
+    name: "Paul Asimow",
+    affiliation: "Faculty, Geology",
+    siteName: "Owens Valley, California",
+    date: "2019",
+    lat: 36.77,
+    lng: -118.2,
+    description: "Ge1 undergraduate field trip to the Eastern Sierra and Owens Valley. Students examine fault scarps, Bishop Tuff, and the interplay of tectonics, volcanism, and water in shaping the landscape.",
+    photos: ["photos/owens_1.jpg", "photos/owens_2.jpg", "photos/owens_3.jpg"]
+  },
+  {
+    name: "Jean-Philippe Avouac",
+    affiliation: "Faculty, Geology & Mechanical and Civil Engineering",
+    siteName: "Nepal Himalaya",
+    date: "1997",
+    lat: 27.7,
+    lng: 85.3,
+    description: "Establishment and maintenance of continuous GPS stations along a transect at the longitude of Kathmandu to measure interseismic strain accumulation and the rate of convergence between India and southern Tibet.",
+    photos: ["photos/nepal_1.jpg", "photos/nepal_2.jpg", "photos/nepal_3.jpg"]
+  },
+  {
+    name: "Joann Stock",
+    affiliation: "Faculty, Geology & Geophysics",
+    siteName: "Sierra San Ferm&iacute;n, Baja California",
+    date: "2003",
+    lat: 30.7,
+    lng: -115.2,
+    description: "Geological mapping of late Miocene to Recent transtensional structures in northeastern Baja California, quantifying fault slip history and the transfer of Baja California to the Pacific plate.",
+    photos: ["photos/baja_1.jpg", "photos/baja_2.jpg"]
+  },
+  {
+    name: "John Wilding & Mark Jackson",
+    affiliation: "PhD Student & Faculty, Seismological Laboratory",
+    siteName: "K&#299;lauea Volcano, Hawai&#699;i",
+    date: "2022",
+    lat: 19.42,
+    lng: -155.28,
+    description: "Deep-learning analysis of nearly 200,000 earthquakes following the 2018 caldera collapse revealed a magmatic web of sill complexes at 36&ndash;43 km depth channeling magma to K&#299;lauea and Mauna Loa.",
+    photos: ["photos/kilauea_1.jpg", "photos/kilauea_2.jpg", "photos/kilauea_3.jpg"]
+  },
+  {
+    name: "Mark Simons & Matt Pritchard",
+    affiliation: "Faculty & PhD Student, Seismological Laboratory",
+    siteName: "Antofagasta, Chile",
+    date: "1995",
+    lat: -23.6,
+    lng: -70.4,
+    description: "InSAR and GPS campaign measurements to determine the co-seismic slip distribution from the Mw 8.1 Antofagasta earthquake along the northern Chile subduction zone.",
+    photos: ["photos/chile_1.jpg", "photos/chile_2.jpg"]
+  },
+  {
+    name: "Brent Minchew & Mark Simons",
+    affiliation: "PhD Student & Faculty, GPS/JPL",
+    siteName: "Langj&ouml;kull, Iceland",
+    date: "2012",
+    lat: 64.7,
+    lng: -19.8,
+    description: "UAVSAR airborne campaign over Langj&ouml;kull and Hofsj&ouml;kull ice caps to measure early melt-season velocity fields and infer the mechanical properties of glacier beds.",
+    photos: ["photos/iceland_1.jpg", "photos/iceland_2.jpg", "photos/iceland_3.jpg"]
+  },
+  {
+    name: "Caltech & Carnegie Institution",
+    affiliation: "Division of Geology (historical)",
+    siteName: "Grand Canyon, Arizona",
+    date: "1939",
+    lat: 36.1,
+    lng: -112.1,
+    description: "Joint Caltech&ndash;Carnegie Institution geological expedition to the Grand Canyon, one of the earliest major field campaigns by the division that would become GPS.",
+    photos: ["photos/grandcanyon_1.jpg", "photos/grandcanyon_2.jpg", "photos/grandcanyon_3.jpg"]
+  },
+  {
+    name: "Joe Kirschvink",
+    affiliation: "Faculty, Geobiology",
+    siteName: "Hamersley Basin, Western Australia",
+    date: "2005",
+    lat: -22.3,
+    lng: 118.3,
+    description: "Paleomagnetic sampling of Precambrian banded iron formations in the Hamersley Basin to constrain the timing of the Great Oxidation Event and true polar wander.",
+    photos: ["photos/australia_1.jpg", "photos/australia_2.jpg"]
+  },
+  {
+    name: "Ken Farley",
+    affiliation: "Faculty, Geochemistry (Mars 2020 Project Scientist)",
+    siteName: "Jezero Crater, Mars",
+    date: "2021",
+    lat: 18.4,
+    lng: 77.7,
+    description: "As Project Scientist for NASA's Mars 2020 mission, directed the Perseverance rover to collect and cache rock core samples in Jezero Crater for eventual return to Earth &mdash; the first step toward Mars sample return.",
+    photos: ["photos/mars_1.jpg", "photos/mars_2.jpg", "photos/mars_3.jpg"]
+  }
+];
+
+// --- Initialize map ---
+const map = L.map('map', {
+  center: [20, 0],
+  zoom: 2,
+  zoomControl: true
+});
+
+// ESRI Ocean basemap — topo on land, bathymetry in oceans
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, National Geographic, DeLorme, HERE',
+  maxZoom: 13
+}).addTo(map);
+
+// Reference labels
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}', {
+  attribution: '',
+  maxZoom: 13
+}).addTo(map);
+
+// --- Add markers ---
+function createMarkerIcon() {
+  return L.divIcon({
+    className: '',
+    html: '<div class="caltech-marker" style="width:14px;height:14px;"></div>',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10],
+    tooltipAnchor: [8, 0]
+  });
+}
+
+mockData.forEach(site => {
+  const marker = L.marker([site.lat, site.lng], { icon: createMarkerIcon() });
+
+  // Tooltip (hover)
+  const tooltipContent = `
+    <div class="site-tooltip">
+      <div class="tooltip-name">${site.siteName}</div>
+      <div class="tooltip-meta">${site.date} &middot; ${site.name}</div>
+    </div>
+  `;
+  marker.bindTooltip(tooltipContent, { direction: 'top', offset: [0, -8] });
+
+  // Popup (click) — use thumbnails in popup, full-size in lightbox
+  let photosHtml = '';
+  if (site.photos.length > 0) {
+    photosHtml = '<div class="popup-photos">' +
+      site.photos.map(url => {
+        const thumb = url.replace('photos/', 'photos/thumbs/');
+        return `<img src="${thumb}" alt="Field photo" onclick="openLightbox('${url}')">`;
+      }).join('') +
+      '</div>';
+  }
+
+  const popupContent = `
+    <div class="site-popup">
+      <h3>${site.siteName}</h3>
+      <div class="popup-meta">${site.date} &middot; ${site.name}<br>${site.affiliation}</div>
+      <div class="popup-description">${site.description}</div>
+      ${photosHtml}
+    </div>
+  `;
+  marker.bindPopup(popupContent, { maxWidth: 340 });
+
+  marker.addTo(map);
+});
+
+// --- Lightbox ---
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = lightbox.querySelector('img');
+
+function openLightbox(url) {
+  lightboxImg.src = url;
+  lightbox.classList.add('active');
+}
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+  lightboxImg.src = '';
+});
+</script>
+
+</body>
+</html>
